@@ -1,0 +1,32 @@
+
+  <div> <h3>Sửa Chất Liệu</h3></div>
+
+  <form class="form-control" data-ng-init="detail()">
+    <div class="row">
+      <div class="col-md-12 ">
+        <label>Tên Chất Liệu <span class="vaid">*</span></label> <input style="width: 200px;" ng-model="form.name">
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'materialRequest' && err.field == 'name'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-12 ">
+        <label>Mô Tả </label> <input style="width: 200px;" ng-model="form.description">
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'materialRequest' && err.field == 'description'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+    </div>
+   
+
+        <div style="padding-top: 30px;">
+<!--                <button style="margin-right: 10px"  class="btn btn-info" ng-click="reset()"><i class="fa-solid fa-rotate-right"></i> Reset</button>-->
+          <button  class="btn btn-danger" ng-click="update()"> Sửa</button></div>
+
+      </div>
+    </div>
+    </div>
+  </form>

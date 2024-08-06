@@ -1,0 +1,215 @@
+ <!--Body Content-->
+ <div id="page-content" style="margin-top: 120px;">
+    <!--Page Title-->
+    <div class="page section-header text-center">
+        <div class="page-title">
+            <div class="wrapper"><h1 class="page-width">Đơn Hàng Của Tôi</h1></div>
+          </div>
+    </div>
+    <!--End Page Title-->
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
+                <button ng-click="getStatus(null)" style="padding-right: 15px;" class="btn btn-dark">Tất cả ({{countall}})</button>
+               <button ng-click="getStatus(0)" style="padding-right: 15px;" class="btn btn-dark">Chờ xác nhận ({{choxacnhan}})</button>
+               <button ng-click="getStatus(1)" style="padding-right: 15px;" class="btn btn-dark">Chờ lấy hàng ({{chogiaohang}})</button>
+               <button ng-click="getStatus(2)" style="padding-right: 15px;" class="btn btn-dark">Đang giao hàng ({{danggiaohang}})</button>
+               <button ng-click="getStatus(3)" style="padding-right: 15px;" class="btn btn-dark">Đã giao hàng ({{dagiaohang}})</button>
+               <button ng-click="getStatus(4)" style="padding-right: 15px;" class="btn btn-dark">Đã hủy ({{dahuy}})</button>
+               <button ng-click="getStatus(5)" style="padding-right: 15px;" class="btn btn-dark">Hoàn trả ({{hoantra}})</button>
+               <table class="table" style="margin-top: 10px;">
+                <thead class="cart__row cart__header">
+                    <tr>
+                        <td colspan="2" class="text-center"><h3>#</h3></td>
+                        <td class="text-center"><h3>Đơn Hàng</h3></td>
+                        <td class="text-center"><h3>Ngày Mua</h3></td>
+                        <td class="text-center"><h3>Tổng Tiền</h3></td>
+                        <td class="text-center"><h3>Phương Thức Thanh Toán</h3></td>
+                        <td class="text-center"><h3>Trạng Thái Thanh Toán</h3></td>
+                        <td class="text-center"><h3>Hành Động</h3></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-if="list.length > 0" ng-repeat="hd in pager.items">
+                        <td colspan="2" class="text-center"><h3>{{$index + 1}}</h3></td>
+                        <td class="text-center"><h3>{{hd.code}}</h3></td>
+                        <td class="text-center"><h3>{{hd.purchaseDate | date:'dd-MM-yyyy' }}</h3></td>
+                        <td class="text-center"><h3>{{hd.totalPrice + hd.shipPrice - hd.totalPriceLast | currency:'':0}} VNĐ</h3></td>
+                        <td class="text-center"><h3>{{hd.payType == 0 ? 'Thanh toán khi nhận hàng' : 'Thanh toán qua VN Pay'}}</h3></td>
+                        <td class="text-center" ng-if="hd.status != 4"><h3>{{hd.payStatus == 1 ? 'Đã thanh toán' : 'Chưa thanh toán'}}</h3></td>
+                        <td class="text-center" ng-if="hd.status == 4"><h3>Đã hủy</h3></td>
+                        <td>
+                            <button ng-if="hd.status == 0 && hd.payType == 1 && hd.payStatus == 0" class="btn btn-dark" ng-click="thanhtoan(hd.code,hd.totalPrice + hd.shipPrice - hd.totalPriceLast)"><i class="fa-solid fa-credit-card"></i> Thanh toán</button>
+                            <button ng-click="togglePopup(hd.code)" class="btn btn-dark"><i class="fa-solid fa-circle-info"></i> Xem chi tiết</button>
+                            <button ng-if="hd.status == 0 || hd.status == 1" class="btn btn-dark" ng-click="huy(hd.code)"><i class="fa-solid fa-ban"></i> Hủy</button>
+                         
+                            
+                        </td>
+                    </tr>
+                    <tr ng-if="list.length == 0">
+
+                        <td colspan="10" style="text-align: center;">
+                            <img style="width: 100px;height: 100px;" src="../assets/images/empty-folder.png">
+                            <h3>Không có đơn hàng nào</h3></td>
+                    </tr>
+                  
+                   
+                </tbody>
+               
+        </table>
+        <div ng-if="list.length > 0" class="text-center">
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+              <button ng-click="pager.first()" type="button"
+                      class="btn btn-outline-secondary"><i class="fa-solid fa-angles-left"></i></button>
+              <button ng-click="pager.prev()" type="button"
+                      class="btn btn-outline-secondary"><i class="fa-solid fa-angle-left"></i></button>
+              <button type="button" class="btn btn-outline-secondary">{{pager.page+1}}
+                of
+                {{pager.count}}</button>
+              <button ng-click="pager.next()" type="button"
+                      class="btn btn-outline-secondary"><i class="fa-solid fa-angle-right"></i></button>
+              <button ng-click="pager.last()" type="button"
+                      class="btn btn-outline-secondary"><i class="fa-solid fa-angles-right"></i></button>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+</div>
+<!--End Body Content-->
+<div class="popup" ng-class="{ 'show': isPopupVisible }">
+  <div class="popup-content">
+    <!-- Nội dung của popup -->
+    <h1>Chi Tiết Đơn Hàng #{{bill.code}} </h1>
+    <div>
+        <h6>Ngày mua : {{bill.purchaseDate | date:'dd-MM-yyyy'}} </h6>
+        <h6 ng-if="bill.paymentDate != null">Ngày thanh toán : {{bill.paymentDate | date:'dd-MM-yyyy'}}</h6>
+        <h6>Thông tin giao hàng : {{address.fullname}} - {{address.phone}} 
+       ( {{address.address}}, {{address.wardName}}, {{address.districtName}}, {{address.cityName}} )</h6>
+        <h6>Thanh toán :  {{bill.payType == 0 ? 'Thanh toán khi nhận hàng' : 'Thanh toán online qua VNPAY'}} (<span style="color: red;">{{bill.payStatus == 0 ? 'Chưa thanh toán' : 'Đã thanh toán'}}</span>) </h6>
+        <h6>Trạng thái đơn hàng  : {{bill.status == 0 ? 'Chờ xác nhận' : bill.status == 1 ? 'Chờ giao hàng' : bill.status == 2 ? 'Đang giao hàng' : bill.status == 3 ? 'Đã giao hàng' : bill.status == 4 ? 'Đã hủy' : 'Đổi trả'}}</h6>
+    </div>
+    <div style="padding: 5px;">
+        <button ng-click="chitiet(bill.code)" class="btn btn-dark"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn hàng</button>
+    </div>
+    <table class="table">
+        <thead class="cart__row cart__header">
+            <tr>
+                <td colspan="2" class="text-center"><h3>Sản Phẩm</h3></td>
+                <td class="text-center"><h3>Đơn Giá</h3></td>
+                <td class="text-center"><h3>Số Lượng</h3></td>
+                <td class="text-center"><h3>Thành Tiền</h3></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="cart in listItem">
+                
+                <td class="cart__image-wrapper cart-flex-item">
+                    <span ng-repeat="img in cart.productDetail.product.productImages">
+                        <span ng-if="img.mainImage == true">
+                            <a href="#"><img class="cart__image" src="{{img.url}}" alt="Elastic Waist Dress - Navy / Small"></a>
+                        </span>
+                    </span>
+                   
+                </td>
+                <td class="cart__meta small--text-left cart-flex-item">
+                    <div class="list-view-item__title">
+                        <a href="#/detail/{{cart.productDetail.id}}"><h4>{{cart.productDetail.product.name}}</h4> </a>
+                        <div>SKU : {{cart.productDetail.product.code}}</div>
+                    </div>
+                    
+                    <div class="cart__meta-text">
+                        Màu : 
+                        <span ng-repeat="color in listColor">
+                            <span ng-if="color.id == cart.idColor">
+                                {{color.name}}
+                            </span>
+                        </span>
+                        <br> Kích Thước : 
+                        <span ng-repeat="size in listSize">
+                            <span ng-if="size.id == cart.idSize">
+                                {{size.name}}
+                            </span>
+                        </span><br>
+                    </div>
+                </td>
+                <td class="text-center">{{cart.unitPrice | currency:'':0}} VNĐ
+            </td>
+                    <td class="cart__update-wrapper cart-flex-item text-center">
+                        {{cart.quantity}}
+                    </td>
+                    <td class="text-center">
+                        {{cart.unitPrice * cart.quantity | currency:'':0}} VNĐ
+                    </td>
+
+            </tr>
+           
+           
+          
+           
+        </tbody>
+       
+</table>
+<!-- <div class="text-center">
+    <div class="btn-group" role="group" aria-label="Basic outlined example">
+      <button ng-click="pager1.first()" type="button"
+              class="btn btn-outline-secondary"><i class="fa-solid fa-angles-left"></i></button>
+      <button ng-click="pager1.prev()" type="button"
+              class="btn btn-outline-secondary"><i class="fa-solid fa-angle-left"></i></button>
+      <button type="button" class="btn btn-outline-secondary">{{pager1.page+1}}
+        of
+        {{pager1.count}}</button>
+      <button ng-click="pager1.next()" type="button"
+              class="btn btn-outline-secondary"><i class="fa-solid fa-angle-right"></i></button>
+      <button ng-click="pager1.last()" type="button"
+              class="btn btn-outline-secondary"><i class="fa-solid fa-angles-right"></i></button>
+    </div>
+  </div> -->
+<div style="text-align: right;">
+    <h6>Tổng tiền : {{bill.totalPrice | currency:'':0}} VNĐ</h6>
+<h6>Phí ship : {{bill.shipPrice | currency:'':0}} VNĐ</h6>
+<h6>Giảm giá : {{bill.totalPriceLast | currency:'':0}} VNĐ</h6>
+<h6>Tổng tiền thanh toán : {{bill.totalPrice + bill.shipPrice - bill.totalPriceLast | currency:'':0}} VNĐ</h6>
+</div>
+
+    <button ng-click="togglePopup()">Đóng</button>
+  </div>
+</div>
+
+<div class="popup" ng-class="{ 'show': isChiTiet }">
+    <div class="popup-content">
+        <h3>Lịch sử đơn hàng</h3>
+      <!-- Nội dung của popup -->
+    <table class="table">
+        <tr>
+            <td>Trạng thái</td>
+            <td>Ngày cập nhật</td>
+            <td style="max-width: 200px; overflow-wrap: break-word;">Ghi chú</td>
+            <td>Người cập nhật</td>
+        </tr>
+        <tr ng-repeat="bi in listbillhistory">
+            <td> <span class="button-bill" ng-if="bi.status == 0"><i class="fa-regular fa-file-lines"></i> Tạo đơn hàng</span>
+                <span class="button-bill" ng-if="bi.status == 1"><i class="fa-regular fa-calendar-check"></i> Đã xác nhận</span>
+                <span class="button-bill" ng-if="bi.status == 2"><i class="fa-solid fa-truck-fast"></i> Đang giao hàng</span>
+                <span class="button-bill" ng-if="bi.status == 3"><i class="fa-solid fa-circle-check"></i> Hoàn thành</span>
+                <span class="button-bill" ng-if="bi.status == 4"><i class="fa-solid fa-ban"></i> Đã hủy</span>
+                <span class="button-bill" ng-if="bi.status == 5"><i class="fa-solid fa-right-left"></i> Đổi trả</span>
+                <span class="button-bill5" ng-if="bi.status == 10"><i class="fa-solid fa-file-invoice-dollar"></i> Xác nhận thanh toán</span>
+                <span class="button-bill4" ng-if="bi.status == 11"><i class="fa-solid fa-map-location"></i> Cập nhật địa chỉ</span>
+                <span class="button-bill2" ng-if="bi.status == 12"><i class="fa-solid fa-trash-can"></i> Xóa sản phẩm</span>
+                <span class="button-bill1" ng-if="bi.status == 13"><i class="fa-solid fa-circle-plus"></i> Thêm sản phẩm</span>
+                </td>
+            <td>{{bi.createDate | date:'HH:mm  dd/MM/yyyy' }}</td>
+            <td style="max-width: 200px; overflow-wrap: break-word;">{{bi.note}}</td>
+            <td>{{bi.createBy}}</td>
+        </tr>
+    </table>
+   <div style="padding-top: 10px;">
+    <button class="btn btn-primary" ng-click="chitiet()">X</button>
+   </div>
+  
+     
+  
+  </div>
+  </div>

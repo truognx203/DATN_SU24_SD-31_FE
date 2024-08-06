@@ -1,0 +1,46 @@
+.container{
+    max-height: 1300px;
+}
+.title{
+    font-size: x-large;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+.table-tab{
+   margin-top: 2rem; 
+
+}
+.tab-pane{
+    /* height: 700px; */
+}
+.table-tab>:not(caption)>*>* {
+    padding: 0px 16px !important;
+    height: 40px;
+    color: black;
+    letter-spacing: 1px;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+    background-color: gray;
+    color: white;
+}
+a{
+   text-decoration: none !important;
+}
+th{
+    cursor: pointer;
+}
+th i{
+    margin-left: 5px;
+}
+ :host ::ng-deep dir-pagination-controls ul li a{
+   color: red;
+}
+.pagination{
+    text-align: center;
+}
+.pagination li{
+    width: 20px;
+    height: 20px;
+    justify-items: center;
+    align-items: center;
+}

@@ -1,0 +1,40 @@
+
+  <div> <h3>Đổi Mật Khẩu</h3></div>
+
+  <form class="form-control">
+    <div class="row">
+      <div class="col-md-12 ">
+        <label>Mật Khẩu Cũ <span class="vaid">*</span></label> <input type="password" class="haninput" ng-model="passcu">
+        <div ng-repeat="err in validationErrors">
+          <span class="validate" ng-if="err.objectName == 'changeForm' && err.field == 'PasswordCu'">
+             {{err.defaultMessage}}
+          </span>
+          </div>   
+      </div>
+      <div class="col-md-12 ">
+        <label>Mật Khẩu Mới <span class="vaid">*</span></label> <input type="password" class="haninput" ng-model="passmoi">
+        <div ng-repeat="err in validationErrors">
+          <span class="validate" ng-if="err.objectName == 'changeForm' && err.field == 'PasswordMoi'">
+             {{err.defaultMessage}}
+          </span>
+          </div>   
+      </div>
+      <div class="col-md-12 ">
+        <label>Nhập Lại Mật Khẩu Mới <span class="vaid">*</span></label> <input type="password" class="haninput" ng-model="repassmoi">
+        <div ng-repeat="err in validationErrors">
+          <span class="validate" ng-if="err.objectName == 'changeForm' && err.field == 'RePasswordMoi'">
+             {{err.defaultMessage}}
+          </span>
+          </div>   
+      </div>
+    </div>
+   
+
+        <div style="padding-top: 30px;">
+<!--                <button style="margin-right: 10px"  class="btn btn-info" ng-click="reset()"><i class="fa-solid fa-rotate-right"></i> Reset</button>-->
+          <button  class="btn btn-danger" ng-click="change()"> Đổi Mật Khẩu</button></div>
+
+      </div>
+    </div>
+    </div>
+  </form>

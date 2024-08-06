@@ -1,0 +1,54 @@
+ <!--Body Content-->
+ <div id="page-content" style="margin-top: 100px;">
+    <!--Page Title-->
+    <div class="page section-header text-center">
+        <div class="page-title">
+            <div class="wrapper"><h1 class="page-width">Quên Mật Khẩu</h1></div>
+          </div>
+    </div>
+    <!--End Page Title-->
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
+                <div class="mb-4">
+                      <div class="row">
+                          <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="FirstName">Tên tài khoản</label>
+                                <input ng-model="form.username" type="text" name="customer[first_name]" placeholder="" id="FirstName" autofocus="">
+                                <div ng-repeat="err in validationErrors">
+                                    <span class="validate" ng-if="err.objectName == 'forgetForm' && err.field == 'Username'">
+                                       {{err.defaultMessage}}
+                                    </span>
+                                    </div>   
+                            </div>
+                           </div>
+                        
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="CustomerEmail">Email</label>
+                                <input ng-model="form.email" type="email" name="customer[email]" placeholder="" id="CustomerEmail" class="" autocorrect="off" autocapitalize="off" autofocus="">
+                                <div ng-repeat="err in validationErrors">
+                                    <span class="validate" ng-if="err.objectName == 'forgetForm' && err.field == 'Email'">
+                                       {{err.defaultMessage}}
+                                    </span>
+                                    </div>   
+                            </div>
+                        </div>
+                    
+                      </div>
+                      <div class="row">
+                        <div class="text-center col-12 col-sm-12 col-md-12 col-lg-12">
+                            <button ng-click="forget()" class="btn btn-dark">Quên Mật Khẩu</button>
+                          
+                        </div>
+                     </div>
+               
+                </div>
+               </div>
+        </div>
+    </div>
+    
+</div>
+<!--End Body Content-->

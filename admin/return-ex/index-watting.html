@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="/assets/css/return-ex-css/index.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
+
+
+<div class="">
+    <div class="title">Quản Lý Đổi Trả</div>
+    <a href="#/return-ex" class="btn btn-info">Home</a>
+    <a href="#/return-ex-refuse" class="btn btn-danger">Home Refuse</a>   
+    <a href="#/return-ex-watting" class="btn btn-warning">Home Watting</a>
+    <a href="#/return-ex-susses" class="btn btn-primary">Home Susses</a>
+
+<div class="tab-content" id="pills-tabContent" ng-model="$ctrl.query">
+        <div >
+          <!-- <input type="search" name="" id="" ng-model="search"> -->
+          <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th class="th-sm "  ng-click="filterCode()" class="d-flex align-items-center"  style="width: 140px;"
+                >Code
+                <i class="fa-solid fa-arrow-up-wide-short"  ng-if="sortCode === true"></i>
+                <i class="fa-solid fa-arrow-down-short-wide"  ng-if="sortCode === false"></i>
+                </th>
+                <th class="th-sm d-flex align-items-center" ng-click="filterCreateDate()">
+                  Create date   
+                  <i class="fa-solid fa-arrow-up-wide-short"  ng-if="sortCreateDate === true"></i>
+                  <i class="fa-solid fa-arrow-down-short-wide"  ng-if="sortCreateDate === false"></i>
+                </th>
+                <th class="th-sm">Create by
+                </th>
+                <th class="th-sm">Note
+                </th>
+                <th class="th-sm">Status
+                </th>
+                <th class="th-sm">Option
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr dir-paginate="a in list | itemsPerPage : 2 | filter : search | orderBy : sortBy : IsSortBy">
+                <td>{{a.code}}</td>
+                <td>{{a.createDate}}</td>
+                <td>{{a.createBy}}</td>
+                <td>{{a.note}}</td>
+                <td style="color: rgb(120, 123, 123);">Watting</td>
+                <td>
+                  <!-- <button class="btn btn-danger" ng-click="tuchoi(a.id)">Refuse</button> -->
+                  <button class="btn btn-warning" ng-click="detailEX(a.id)" data-toggle="modal" data-target="#exampleModal">Detail</button>
+                  <!-- <button class="btn btn-primary" ng-click="tuchoi(a.id)">Accept</button> -->
+                </td>
+              </tr>
+            </tbody>
+   
+          </table>
+          <dir-pagination-controls 
+            direction-links="true"
+            boundary-links="true"
+          >
+          </dir-pagination-controls>
+        </div>
+       
+      </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detail Return Ex Change</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <strong>Image :</strong>
+          <img src="{{detail.image}}" alt="" srcset="">
+        </div>
+      <div><strong>Code :</strong> <span>{{detail.code}}</span></div>
+       <div><strong>CreateBy :</strong> <span>{{detail.createBy}}</span></div>
+       <div><strong>CreateDate :</strong> <span>{{detail.createDate}}</span></div>
+       <div><strong>Note :</strong> <span>{{detail.note}}</span></div>
+       <div><strong>status :</strong> <span>{{detail.status = 1?'watting':''}}</span></div>
+       <div><strong>returnExchangeHistorys :</strong>
+        <table class="table table-bordered
+        
+        
+        ">
+          <tr>
+            <th>Name</th>  
+            <th>Note</th>
+            <th>Date</th>       
+          </tr>
+          <tbody>
+            <tr ng-repeat="a in detail.returnExchangeHistorys ">
+              <td>{{a.createBy}}</td>
+              <td>{{a.note}}</td>
+              <td>{{a.createDate}}</td>
+            </tr>
+          </tbody>
+        </table>
+        
+      
+      </div>
+        
+        
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

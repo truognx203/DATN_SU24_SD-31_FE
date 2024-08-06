@@ -1,0 +1,378 @@
+<!--Body Content-->
+<div id="page-content">
+	<!--Home slider-->
+	<div id="slideshowhan">
+		<div class="slideshow slide-wrapperhan  pb-section sliderFull ">
+			<div class="slidehan blur-up lazyload bg-size " ng-repeat="img in listBanner">
+				<img class="blur-up lazyload bg-img" src="{{img.url}}">
+				<div class="image-text bottom">
+					<div class="wrap-caption center">
+						<h2 class="h1 mega-title slideshow__title">{{img.content}}</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="slideshow slideshow-wrapper pb-section sliderFull">
+		<div class="home-slideshow"> -->
+	<!-- <div class="slide">
+				<div class="blur-up lazyload bg-size">
+					<img class="blur-up lazyload bg-img" data-src="assets/images/slideshow-banners/belle-banner2.jpg" src="assets/images/slideshow-banners/belle-banner2.jpg" alt="Summer Bikini Collection" title="Summer Bikini Collection" />
+					<div class="slideshow__text-wrap slideshow__overlay classic bottom">
+						<div class="slideshow__text-content bottom">
+							<div class="wrap-caption center">
+								<h2 class="h1 mega-title slideshow__title">Summer Bikini Collection</h2>
+								<span class="mega-subtitle slideshow__subtitle">Save up to 50% off this weekend only</span>
+								<span class="btn">Shop now</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+	<!-- <div id="banner">
+				
+			</div> -->
+
+
+	<!-- <div class="slide" ng-repeat="img in listBanner" ng-if="listBanner.length > 0">
+				<div class="blur-up lazyload bg-size">
+					<img class="blur-up lazyload bg-img" data-src="{{img.url}}" src="{{img.url}}" alt="{{img.content}}" title="{{img.content}}" />
+					<div class="slideshow__text-wrap slideshow__overlay classic bottom">
+						<div class="slideshow__text-content bottom">
+							<div class="wrap-caption center">
+								<h2 class="h1 mega-title slideshow__title">{{img.content}}</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+
+
+
+	<!-- </div>
+	</div> -->
+	<!--End Home slider-->
+
+	<!-- Collection Box slider-->
+	<!-- <div class="collection-box section">
+		<div class="container-fluid">
+			<div class="collection-grid">
+					<div class="collection-grid-item">
+						<a href="collection-page.html" class="collection-grid-item__link">
+							<img data-src="assets/images/collection/fashion.jpg" src="assets/images/collection/fashion.jpg" alt="Fashion" class="blur-up lazyload"/>
+							<div class="collection-grid-item__title-wrapper">
+								<h3 class="collection-grid-item__title btn btn--secondary no-border">Fashion</h3>
+							</div>
+						</a>
+					</div>
+					<div class="collection-grid-item">
+						<a href="collection-page.html" class="collection-grid-item__link">
+							<img class="blur-up lazyload" data-src="assets/images/collection/cosmetic.jpg" src="assets/images/collection/cosmetic.jpg" alt="Cosmetic"/>
+							<div class="collection-grid-item__title-wrapper">
+								<h3 class="collection-grid-item__title btn btn--secondary no-border">Cosmetic</h3>
+							</div>
+						</a>
+					</div>
+					<div class="collection-grid-item blur-up lazyloaded">
+						<a href="collection-page.html" class="collection-grid-item__link">
+							<img data-src="assets/images/collection/bag.jpg" src="assets/images/collection/bag.jpg" alt="Bag" class="blur-up lazyload"/>
+							<div class="collection-grid-item__title-wrapper">
+								<h3 class="collection-grid-item__title btn btn--secondary no-border">Bag</h3>
+							</div>
+						</a>
+					</div>
+					<div class="collection-grid-item">
+						<a href="collection-page.html" class="collection-grid-item__link">
+							<img data-src="assets/images/collection/accessories.jpg" src="assets/images/collection/accessories.jpg" alt="Accessories" class="blur-up lazyload"/>
+							<div class="collection-grid-item__title-wrapper">
+								<h3 class="collection-grid-item__title btn btn--secondary no-border">Accessories</h3>
+							</div>
+						</a>
+					</div>
+					<div class="collection-grid-item">
+						<a href="collection-page.html" class="collection-grid-item__link">
+							<img data-src="assets/images/collection/shoes.jpg" src="assets/images/collection/shoes.jpg" alt="Shoes" class="blur-up lazyload"/>
+							<div class="collection-grid-item__title-wrapper">
+								<h3 class="collection-grid-item__title btn btn--secondary no-border">Shoes</h3>
+							</div>
+						</a>
+					</div>
+					<div class="collection-grid-item">
+						<a href="collection-page.html" class="collection-grid-item__link">
+							<img data-src="assets/images/collection/jewellry.jpg" src="assets/images/collection/jewellry.jpg" alt="Jewellry" class="blur-up lazyload"/>
+							<div class="collection-grid-item__title-wrapper">
+								<h3 class="collection-grid-item__title btn btn--secondary no-border">Jewellry</h3>
+							</div>
+						</a>
+					</div>
+				</div>
+		</div>
+	</div> -->
+	<!--End Collection Box slider -->
+
+	<!--Featured Product-->
+	<div class="product-rows section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="section-header text-center">
+						<h2 class="h2">Sản Phẩm Bán Chạy</h2>
+					</div>
+				</div>
+			</div>
+			<div class="grid-products">
+				<div class="row">
+					<div ng-repeat="sp in pagerProductSold.items" class="col-6 col-sm-6 col-md-3 col-lg-3 item grid-view-item style2">
+						<div class="grid-view_image">
+							<!-- start product image -->
+							<a href="#/detail/{{sp.id}}" class="grid-view-item__link">
+								<span ng-if="sp.product.productImages.length >= 2">
+									<span ng-repeat="image in sp.product.productImages">
+										<span ng-if="image.mainImage == true">
+											<!-- image -->
+											<!-- <h3>{{image.url}}</h3> -->
+											<img style="height: 300px; border-radius: 20px;" class="grid-view-item__image primary blur-up lazyload" src="{{image.url}}" alt="Ảnh sản phẩm" title="product">
+											<!-- End image -->
+										</span>
+										<span ng-if="image.mainImage == false">
+											<!-- Hover image -->
+											<!-- <h3>{{sp.product.productImages[0].url}}</h3> -->
+											<img style="height: 300px; border-radius: 20px;" class="grid-view-item__image hover blur-up lazyload" src="{{sp.product.productImages[0].url}}" alt="image" title="product">
+											<!-- End hover image -->
+										</span>
+									</span>
+								</span>
+								<span ng-if="sp.product.productImages.length == 1">
+									<span ng-repeat="image in sp.product.productImages">
+										<!-- image -->
+										<img style="height: 300px; border-radius: 20px;" class="grid-view-item__image primary blur-up lazyload" src="{{image.url}}" alt="Ảnh sản phẩm" title="product">
+										<!-- End image -->
+										<!-- Hover image -->
+										<img style="height: 300px; border-radius: 20px;" class="grid-view-item__image hover blur-up lazyload" src="{{image.url}}" alt="image" title="product">
+										<!-- End hover image -->
+									</span>
+								</span>
+
+								<!-- product label -->
+								<div class="product-labels rectangular">
+									<span ng-if="sp.discount > 0">
+										<span class="lbl on-sale">-{{sp.discount}}%</span>
+									</span>
+
+									<!-- <span class="lbl pr-label1">new</span> -->
+								</div>
+								<!-- End product label -->
+							</a>
+							<!-- end product image -->
+							<!--start product details -->
+							<div class="product-details hoverDetails text-center mobile">
+
+
+								<!-- product button -->
+								<div class="button-set">
+
+									<div class="btn">
+										<a href="#/detail/{{sp.id}}">
+											Xem chi tiết
+										</a>
+									</div>
+
+								</div>
+								<!-- end product button -->
+							</div>
+							<!-- product name -->
+							<div class="product-name">
+								<a href="#/detail/{{sp.id}}">
+									<h3>{{sp.product.name}}</h3>
+								</a>
+							</div>
+							<!-- End product name -->
+							<!-- product price -->
+							<div class="product-price">
+								<span ng-if="sp.discount > 0">
+									<span class="old-price">{{sp.price | currency:'':0}} VNĐ</span>
+									<span class="price">{{sp.price - (sp.price * (sp.discount * 0.01)) | currency:'':0}} VNĐ</span>
+								</span>
+
+
+								<span ng-if="sp.discount == 0">
+
+									<span class="price">{{sp.price | currency:'':0}} VNĐ</span>
+								</span>
+
+							</div>
+							<!-- <div class="product-review">
+										<i class="font-13 fa fa-star"></i>
+										<i class="font-13 fa fa-star"></i>
+										<i class="font-13 fa fa-star"></i>
+										<i class="font-13 fa fa-star-o"></i>
+										<i class="font-13 fa fa-star-o"></i>
+									</div> -->
+							<!-- End product price -->
+							<!-- Variant -->
+							<!-- <ul class="swatches text-center" ng-repeat="img in sp.product.productImages">
+									<li class="swatch medium rounded"><img style="height: 50px;" src="{{img.url}}" alt="image" /></li>
+		
+								</ul> -->
+							<!-- End Variant -->
+							<!-- End product details -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--End Featured Product-->
+	<!--Featured Product-->
+	<div class="product-rows section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="section-header text-center">
+						<h2 class="h2">Sản Phẩm Mới</h2>
+					</div>
+				</div>
+			</div>
+			<div class="grid-products">
+				<div class="row">
+					<div ng-repeat="sp in pagerProductNew.items " ng-if="list.length > 0 && sp.status == 0" class="col-6 col-sm-6 col-md-3 col-lg-3 item grid-view-item style2">
+						<div class="grid-view_image">
+							<!-- start product image -->
+							<a href="#/detail/{{sp.id}}" class="grid-view-item__link">
+								<span ng-if="sp.product.productImages.length >= 2">
+									<span ng-repeat="image in sp.product.productImages">
+										<span ng-if="image.mainImage == true">
+											<!-- image -->
+											<img style="height: 300px; border-radius: 20px;" class="grid-view-item__image primary blur-up lazyload" src="{{image.url}}" alt="Ảnh sản phẩm" title="product">
+											<!-- End image -->
+										</span>
+										<span ng-if="image.mainImage == false">
+											<!-- Hover image -->
+											<img style="height: 300px; border-radius: 20px;" class="grid-view-item__image hover blur-up lazyload" src="{{sp.product.productImages[0].url}}" alt="image" title="product">
+											<!-- End hover image -->
+											
+										</span>
+									</span>
+								</span>
+								<span ng-if="sp.product.productImages.length == 1">
+									<span ng-repeat="image in sp.product.productImages">
+										
+										<!-- image -->
+										<img style="height: 300px; border-radius: 20px;" class="grid-view-item__image primary blur-up lazyload" src="{{image.url}}" alt="Ảnh sản phẩm" title="product">
+										<!-- End image -->
+
+										
+										<!-- Hover image -->
+										<img style="height: 300px; border-radius: 20px;" class="grid-view-item__image hover blur-up lazyload" src="{{image.url}}" alt="image" title="product">
+										<!-- End hover image -->
+
+									</span>
+								</span>
+
+								<!-- product label -->
+								<div class="product-labels rectangular">
+									<span ng-if="sp.discount > 0">
+										<span class="lbl on-sale">-{{sp.discount}}%</span>
+									</span>
+
+									<span class="lbl pr-label1">new</span>
+								</div>
+								<!-- End product label -->
+							</a>
+							<!-- end product image -->
+							<!--start product details -->
+							<div class="product-details hoverDetails text-center mobile">
+
+
+								<!-- product button -->
+								<div class="button-set">
+
+									<div class="btn">
+										<a href="#/detail/{{sp.id}}">
+											Xem chi tiết
+										</a>
+									</div>
+
+								</div>
+								<!-- end product button -->
+							</div>
+							<!-- product name -->
+							<div class="product-name">
+								<a href="#/detail/{{sp.id}}">
+									<h3>{{sp.product.name}}</h3>
+								</a>
+							</div>
+							<!-- End product name -->
+							<!-- product price -->
+							<div class="product-price">
+								<span ng-if="sp.discount > 0">
+									<span class="old-price">{{sp.price | currency:'':0}} VNĐ</span>
+									<span class="price">{{sp.price - (sp.price * (sp.discount * 0.01)) | currency:'':0}} VNĐ</span>
+								</span>
+
+
+								<span ng-if="sp.discount == 0">
+
+									<span class="price">{{sp.price | currency:'':0}} VNĐ</span>
+								</span>
+
+							</div>
+							<!-- End product price -->
+							<!-- <div class="product-review">
+									<i class="font-13 fa fa-star"></i>
+									<i class="font-13 fa fa-star"></i>
+									<i class="font-13 fa fa-star"></i>
+									<i class="font-13 fa fa-star-o"></i>
+									<i class="font-13 fa fa-star-o"></i>
+								</div> -->
+							<!-- Variant -->
+							<!-- <ul class="swatches text-center" ng-repeat="img in sp.product.productImages">
+								<li class="swatch medium rounded"><img style="height: 50px;" src="{{img.url}}" alt="image" /></li>
+	
+							</ul> -->
+							<!-- End Variant -->
+							<!-- End product details -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--End Featured Product-->
+
+
+	<!--Store Feature-->
+	<div class="store-feature section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+					<ul class="display-table store-info">
+						<li class="display-table-cell">
+							<i class="icon anm anm-truck-l"></i>
+							<h5>Giao Hàng Toàn Quốc</h5>
+							<span class="sub-text">Hỗ trợ giao hàng trên 63 tỉnh thành.</span>
+						</li>
+						<li class="display-table-cell">
+							<i class="icon anm anm-dollar-sign-r"></i>
+							<h5>Miễn Phí Đổi Trả</h5>
+							<span class="sub-text">Đổi trả miễn phí trong vòng 7 ngày.</span>
+						</li>
+						<li class="display-table-cell">
+							<i class="icon anm anm-comments-l"></i>
+							<h5>Hỗ Trợ Trực Tuyến</h5>
+							<span class="sub-text">Chúng tôi hỗ trợ 24/7.</span>
+						</li>
+						<li class="display-table-cell">
+							<i class="icon anm anm-credit-card-front-r"></i>
+							<h5>Thanh Toán Bảo Mật</h5>
+							<span class="sub-text">Tất cả các thanh toán để được bảo mật.</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--End Store Feature-->
+</div>
+<!--End Body Content-->

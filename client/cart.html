@@ -1,0 +1,233 @@
+ <!--Body Content-->
+ <div id="page-content" style="margin-top: 120px;">
+    <!--Page Title-->
+    <div class="page section-header text-center">
+        <div class="page-title">
+            <div class="wrapper"><h1 class="page-width">Giỏ Hàng</h1></div>
+          </div>
+    </div>
+    <!--End Page Title-->
+    
+    <div class="container">
+        <div class="row" ng-if="user != null">
+            <div class="col-12 col-sm-12 col-md-8 col-lg-8 main-col">
+               
+                    <table class="table">
+                        <thead class="cart__row cart__header">
+                            <tr>
+                                <td colspan="2" class="text-center"><h3>Sản Phẩm</h3></td>
+                                <td class="text-center"><h3>Đơn Giá</h3></td>
+                                <td class="text-center"><h3>Số Lượng</h3></td>
+                                <td class="text-center"><h3>Thành Tiền</h3></td>
+                                <td class="action">&nbsp;</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-if="listCart.length > 0" ng-repeat="cart in listCart">
+                                
+                                <td class="cart__image-wrapper cart-flex-item">
+                                    <span ng-repeat="img in cart.productDetail.product.productImages">
+                                        <span ng-if="img.mainImage == true">
+                                            <a href="#"><img class="cart__image" src="{{img.url}}" alt="Elastic Waist Dress - Navy / Small"></a>
+                                        </span>
+                                    </span>
+                                   
+                                </td>
+                                <td class="cart__meta small--text-left cart-flex-item">
+                                    <div class="list-view-item__title">
+                                        <a href="#/detail/{{cart.productDetail.id}}">{{cart.productDetail.product.name | uppercase}}
+                                            
+                                        </a>
+                                    </div>
+                                    
+                                    <div class="cart__meta-text">
+                                         SKU : {{cart.productDetail.product.code}}<br>
+                                        Màu : 
+                                        <span ng-repeat="color in listColor">
+                                            <span ng-if="color.id == cart.idColor">
+                                                {{color.name}}
+                                            </span>
+                                        </span>
+                                        <br> Kích Thước : 
+                                        <span ng-repeat="size in listSize">
+                                            <span ng-if="size.id == cart.idSize">
+                                                {{size.name}}
+                                            </span>
+                                        </span><br>
+                                    </div>
+                                </td>
+                                <td class="text-center"><span ng-if="cart.productDetail.discount > 0">
+                                    {{cart.productDetail.price - (cart.productDetail.price * (cart.productDetail.discount * 0.01)) | currency:'':0}} VNĐ
+                                </span>
+                                <span ng-if="cart.productDetail.discount == 0">
+                                    {{cart.productDetail.price | currency:'':0}} VNĐ
+                                </span>
+                            
+                            </td>
+                                    <td class="cart__update-wrapper cart-flex-item text-right">
+                                        <div class="cart__qty text-center">
+                                            <div class="qtyField">
+                                                <a class="qtyBtn minus" ng-click="giam(cart.id,cart.productDetail.id,cart.idColor,cart.idSize)"><i class="icon icon-minus"></i></a>
+                                                <input ng-keyup="EnterQuantity(cart.id,cart.productDetail.id,cart.idColor,cart.idSize)" class="cart__qty-input qty" type="text" name="updates[]" id="qty{{cart.id}}" value="{{cart.quantity}}" pattern="[0-9]*">
+                                                <a class="qtyBtn plus"  ng-click="tang(cart.id,cart.productDetail.id,cart.idColor,cart.idSize)"><i class="icon icon-plus"></i></a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-if="cart.productDetail.discount > 0">
+                                            {{(cart.productDetail.price - (cart.productDetail.price * (cart.productDetail.discount * 0.01))) * cart.quantity | currency:'':0}} VNĐ
+                                        </span>
+                                        <span ng-if="cart.productDetail.discount == 0">
+                                            {{cart.productDetail.price * cart.quantity | currency:'':0}} VNĐ
+                                        </span>
+                                    </td>
+                                    <td><button class="btn btn-dark" ng-click="deleteByCart(cart.id)"><i class="fa-solid fa-trash"></i></button></td>
+                            </tr>
+                            <tr ng-if="listCart.length == 0">
+                                <td style="text-align: center;" colspan="6"><img style="width: 100px;height: 100px;" src="./assets/images/empty-cart.png">
+                                <h3>Không có sản phẩm nào trong giỏ</h3>
+                                </td>
+                                </tr>
+                           
+                          
+                           
+                        </tbody>
+                       
+                       
+                </table>
+                
+               
+               
+                
+                             
+               </div>
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4 cart__footer">
+              
+                <div class="solid-border">
+                  <div class="row">
+                      <span class="col-12 col-sm-6 cart__subtotal-title"><strong>Tổng Tiền Tạm Tính :</strong></span>
+                    <span class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right"><span class="money">{{tongTien | currency:'':0}} VNĐ</span></span>
+                  </div>
+                  <div class="cart__shipping">Phí ship sẽ được cập nhật trong phần thanh toán</div>
+                  
+                 <button ng-click="checkCheckOut()" class="btn">Thanh Toán</button>
+                  <div class="paymnet-img"><img src="assets/images/payment-img.jpg" alt="Payment"></div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row" ng-if="user == null">
+            <div class="col-12 col-sm-12 col-md-8 col-lg-8 main-col">
+               
+                    <table class="table">
+                        <thead class="cart__row cart__header">
+                            <tr>
+                                <td colspan="2" class="text-center"><h3>Sản Phẩm</h3></td>
+                                <td class="text-center"><h3>Đơn Giá</h3></td>
+                                <td class="text-center"><h3>Số Lượng</h3></td>
+                                <td class="text-center"><h3>Thành Tiền</h3></td>
+                                <td class="action">&nbsp;</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr ng-if="listCart1.length > 0" ng-repeat="cart in listCart1">
+                        
+                                <td class="cart__image-wrapper cart-flex-item">
+                                    <span ng-repeat="img in cart.idProductDetail.product.productImages">
+                                        <span ng-if="img.mainImage == true">
+                                            <a href="#"><img class="cart__image" src="{{img.url}}" alt="Elastic Waist Dress - Navy / Small"></a>
+                                        </span>
+                                    </span>
+                                   
+                                </td>
+                                <td class="cart__meta small--text-left cart-flex-item">
+                                    <div class="list-view-item__title">
+                                        <a href="#/detail/{{cart.idProductDetail.id}}">{{cart.idProductDetail.product.name | uppercase}}
+                                            
+                                        </a>
+                                    </div>
+                                    
+                                    <div class="cart__meta-text">
+                                         SKU : {{cart.idProductDetail.product.code}}<br>
+                                        Màu : 
+                                        <span ng-repeat="color in listColor">
+                                           
+                                            <span ng-if="color.id == cart.idColor">
+                                                
+                                                {{color.name}}
+                                            </span>
+                                        </span>
+                                        <br> Kích Thước : 
+                                        <span ng-repeat="size in listSize">
+                                            <span ng-if="size.id == cart.idSize">
+                                                {{size.name}}
+                                            </span>
+                                        </span><br>
+                                    </div>
+                                </td>
+                                <td class="text-center"><span ng-if="cart.idProductDetail.discount > 0">
+                                    {{cart.idProductDetail.price - (cart.idProductDetail.price * (cart.idProductDetail.discount * 0.01)) | currency:'':0}} VNĐ
+                                </span>
+                                <span ng-if="cart.idProductDetail.discount == 0">
+                                    {{cart.idProductDetail.price | currency:'':0}} VNĐ
+                                </span>
+                            
+                            </td>
+                                    <td class="cart__update-wrapper cart-flex-item text-right">
+                                        <div class="cart__qty text-center">
+                                            <div class="qtyField">
+                                                <a class="qtyBtn minus" ng-click="giam1(cart.idProductDetail.id,cart.idColor,cart.idSize)"><i class="icon icon-minus"></i></a>
+                                                <input ng-keyup="EnterQuantity1(cart.idProductDetail.id,cart.idColor,cart.idSize)" class="cart__qty-input qty" type="text" name="updates[]" id="qty1{{cart.idProductDetail.id}}color{{cart.idColor}}size{{cart.idSize}}" value="{{cart.quantity}}" pattern="[0-9]*">
+                                                <a class="qtyBtn plus"  ng-click="tang1(cart.idProductDetail.id,cart.idColor,cart.idSize)"><i class="icon icon-plus"></i></a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-if="cart.idProductDetail.discount > 0">
+                                            {{(cart.idProductDetail.price - (cart.idProductDetail.price * (cart.idProductDetail.discount * 0.01))) * cart.quantity | currency:'':0}} VNĐ
+                                        </span>
+                                        <span ng-if="cart.idProductDetail.discount == 0">
+                                            {{cart.idProductDetail.price * cart.quantity | currency:'':0}} VNĐ
+                                        </span>
+                                    </td>
+                                    <td><button class="btn btn-dark" ng-click="deleteByCart1(cart.idProductDetail.id,cart.idColor,cart.idSize)"><i class="fa-solid fa-trash"></i></button></td>
+                                 
+                            </tr>
+                            <tr ng-if="listCart1.length == 0">
+                                <td style="text-align: center;" colspan="6"><img style="width: 100px;height: 100px;" src="./assets/images/empty-cart.png">
+                                <h3>Không có sản phẩm nào trong giỏ</h3>
+                                </td>
+                                </tr>
+                           
+                          
+                           
+                        </tbody>
+                       
+                       
+                </table>
+                
+               
+               
+                
+                             
+               </div>
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4 cart__footer">
+              
+                <div class="solid-border">
+                  <div class="row">
+                      <span class="col-12 col-sm-6 cart__subtotal-title"><strong>Tổng Tiền Tạm Tính :</strong></span>
+                    <span class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right"><span class="money">{{tongTien1 | currency:'':0}} VNĐ</span></span>
+                  </div>
+                  <div class="cart__shipping">Phí ship sẽ được cập nhật trong phần thanh toán</div>
+                  
+                 <button ng-click="checkCheckOut()" class="btn">Thanh Toán</button>
+                  <div class="paymnet-img"><img src="assets/images/payment-img.jpg" alt="Payment"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+</div>
+<!--End Body Content-->

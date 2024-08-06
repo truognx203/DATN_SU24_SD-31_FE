@@ -1,0 +1,579 @@
+ <!--Body Content-->
+ <div id="page-content">
+    <!--Page Title-->
+    <div class="page section-header text-center" style="margin-top: 120px;">
+        <div class="page-title">
+            <div class="wrapper"><h1 class="page-width">Thanh Toán</h1></div>
+          </div>
+    </div>
+    <!--End Page Title-->
+    
+    <div class="container">
+    
+
+        <div class="row billing-fields" ng-if="user != null">
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+                <div class="your-order-payment">
+                    <div class="your-order">
+                        <h2 class="order-title mb-4">Đơn Hàng Của Bạn</h2>
+
+                        <div class="table-responsive-sm order-table"> 
+                            <table class="bg-white table table-bordered table-hover text-center">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Sản Phẩm</th>
+                                        <th>Đơn Giá</th>
+                                        <th>Màu Sắc</th>
+                                        <th>Kích Thước</th>
+                                        <th>Số Lượng</th>
+                                        <th>Thành Tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="cart in listCart">
+                                        <td class="cart__image-wrapper cart-flex-item">
+                                            <span ng-repeat="img in cart.productDetail.product.productImages">
+                                                <span ng-if="img.mainImage == true">
+                                                    <a href="#"><img class="cart__image" src="{{img.url}}" alt="Elastic Waist Dress - Navy / Small"></a>
+                                                </span>
+                                            </span>
+                                           
+                                        </td>
+                                        <td class="text-left">{{cart.productDetail.product.name | uppercase}} <br> SKU : {{cart.productDetail.product.code}}</td>
+                                        <td><span ng-if="cart.productDetail.discount > 0">
+                                            {{cart.productDetail.price - (cart.productDetail.price * (cart.productDetail.discount * 0.01)) | currency:'':0}} VNĐ
+                                        </span>
+                                        <span ng-if="cart.productDetail.discount == 0">
+                                            {{cart.productDetail.price | currency:'':0}} VNĐ
+                                        </span></td>
+                                        <td> <span ng-repeat="color in listColor">
+                                            <span ng-if="color.id == cart.idColor">
+                                                {{color.name}}
+                                            </span>
+                                        </span></td>
+                                        <td> <span ng-repeat="size in listSize">
+                                            <span ng-if="size.id == cart.idSize">
+                                                {{size.name}}
+                                            </span>
+                                        </span></td>
+                                        <td>{{cart.quantity}}</td>
+                                        <td><span ng-if="cart.productDetail.discount > 0">
+                                            {{(cart.productDetail.price - (cart.productDetail.price * (cart.productDetail.discount * 0.01))) * cart.quantity | currency:'':0}} VNĐ
+                                        </span>
+                                        <span ng-if="cart.productDetail.discount == 0">
+                                            {{cart.productDetail.price * cart.quantity | currency:'':0}} VNĐ
+                                        </span></td>
+                                    </tr>
+                                 
+                                </tbody>
+                                <tfoot class="font-weight-600">
+                                    <tr>
+                                        <td colspan="6" class="text-right">Tổng tiền </td>
+                                        <td>{{tongTien | currency:'':0}} VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" class="text-right">Phí ship </td>
+                                        <td>{{phiShip | currency:'':0}} VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" class="text-right">Giảm giá </td>
+                                        <td>{{giamGia | currency:'':0}} VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" class="text-right">Tổng tiền cần thanh toán</td>
+                                        <td>{{tienThanhToan | currency:'':0}} VNĐ</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <hr />
+                    <div class="discount-coupon" >
+                       
+                        <div id="coupon" class="coupon-dec tab-pane active">
+        
+                            <div id="voucher" ng-if="checkVoucher == true && voucherIs == false && voucherType === true">{{voucherName}} | Giảm {{discountVoucher}} áp dụng trên trên hóa đơn  (- {{voucherGiamGia | currency:'':0}} VNĐ)
+                                <button ng-click="removeVoucher()" style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                            <div id="voucher" ng-if="checkVoucher == true && voucherIs == false && voucherType === false">{{voucherName}} | Giảm {{cashVoucher}} áp dụng trên hóa đơn  (- {{voucherGiamGia | currency:'':0}} VNĐ)
+                                <button ng-click="removeVoucher()" style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                            <div id="voucher" ng-if="checkVoucher == true && voucherIs == true && voucherType === true">{{voucherName}} | Giảm {{discountVoucher}} áp dụng trên trên sản phẩm  (- {{voucherGiamGia | currency:'':0}} VNĐ)
+                                <button ng-click="removeVoucher()" style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash-can"></i></button>
+                              
+                                <div>Áp dụng cho sản phẩm : </div>
+                                <div ng-repeat="sp in listSPVoucher">
+                                    - [{{sp.productDetail.product.name}} - SKU : {{sp.productDetail.product.code}}]
+                                </div>
+                            </div>
+                            <div id="voucher" ng-if="checkVoucher == true && voucherIs == true && voucherType === false">{{voucherName}} | Giảm tối đa {{cashVoucher}} áp dụng trên sản phẩm  (- {{voucherGiamGia | currency:'':0}} VNĐ)
+                                <button ng-click="removeVoucher()" style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash-can"></i></button>
+                                <div>Áp dụng cho sản phẩm : </div>
+                                <div ng-repeat="sp in listSPVoucher">
+                                    - [{{sp.productDetail.product.name}} - SKU : {{sp.productDetail.product.code}}]
+                                </div>
+                            </div>
+
+                            <div id="voucher1"  ng-if="checkCoupon == true && couponType == true">{{couponName}} | Giảm {{discountCoupon}} trên hóa đơn (- {{couponGiamGia | currency:'':0}} VNĐ)
+                                <button ng-click="removeCoupon()" style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                            <div id="voucher1"  ng-if="checkCoupon == true && couponType == false">{{couponName}} | Giảm {{cashCoupon}} trên hóa đơn (- {{couponGiamGia | currency:'':0}} VNĐ)
+                                <button ng-click="removeCoupon()" style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                            <input id="coupon-code" required="" type="text" class="mb-3" placeholder="Áp mã giảm giá (nếu có)">
+                            <button ng-click="apMa()" class="coupon-btn btn" type="submit"><i class="fa-solid fa-gift"></i> Áp Mã Giảm Giá</button>
+                        </div>
+                    </div>
+                  
+                    
+                </div>
+               <a href="#cart"> <button class="coupon-btn btn">Quay Lại Giỏ Hàng</button></a>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 sm-margin-30px-bottom">
+                <div class="create-ac-content bg-light-gray padding-20px-all">
+                    
+                        <h2 class="login-title mb-3">Thông Tin Giao Hàng</h2>
+                        <fieldset>
+                            <div class="row">
+                                <div class="form-group col-md-12 col-lg-12 col-xl-12">
+                                   
+                                    <label for="input-company">Địa chỉ nhận hàng <span class="required-f">*</span>
+                                  
+                                    </label>
+                    
+                                   <select id="idAddress" ng-click="changeAddress()" >
+                                    <option ng-repeat="add in listAddress" value="{{add.id}}">{{add.fullname}} - {{add.phone}} | {{add.address}}, {{add.wardName}}, {{add.districtName}}, {{add.cityName}}</option>
+                                   </select>
+                                   <button ng-click="themDiaChi()" style="float: right;"><i class="fa-solid fa-plus"></i> Thêm địa chỉ mới</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <div class="form-group col-md-12 col-lg-12 col-xl-12">
+                                    <label for="input-company">Ghi Chú </label>
+                                    <textarea id="note" class="form-control resize-both" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                   
+                    <hr />
+                 
+                   
+    
+     
+                    <div class="your-payment">
+                       
+                       
+                        <h2 class="payment-title mb-3">Phương Thức Thanh Toán</h2>
+                        <div class="payment-method">
+                            <div class="payment-accordion">
+                                <div class="radio-buttonhan1">
+                                    <input type="radio" id="pay1" name="radio-group1" checked>
+                                    <label for="pay1"><i class="fa-solid fa-wallet"></i> Thanh toán khi nhận hàng</label>
+                                    <input type="radio" id="pay2" name="radio-group1">
+                                    <label for="pay2"><i class="fa-solid fa-credit-card"></i> Thanh toán  qua VNPAY</label>
+                                  </div>
+                                <!-- <select id="typePay">
+                                    <option value="pay1">Thanh Toán Khi Nhận Hàng</option>
+                                    <option value="pay2">Thanh Toán Trực Tuyến Với VNPAY</option>
+                                   </select> -->
+    
+                                  
+                            </div>
+    
+                            <div class="order-button-payment">
+                                <button class="btn" value="Place order" ng-click="buy()">Đặt Hàng</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    
+                </div>
+
+             
+            </div>
+
+            <div class="row billing-fields" ng-if="user == null">
+                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+                    <div class="your-order-payment">
+                        <div class="your-order">
+                            <h2 class="order-title mb-4">Đơn Hàng Của Bạn</h2>
+    
+                            <div class="table-responsive-sm order-table"> 
+                                <table class="bg-white table table-bordered table-hover text-center">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Sản Phẩm</th>
+                                            <th>Đơn Giá</th>
+                                            <th>Màu Sắc</th>
+                                            <th>Kích Thước</th>
+                                            <th>Số Lượng</th>
+                                            <th>Thành Tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="cart in listCart1">
+                                            <td class="cart__image-wrapper cart-flex-item">
+                                                <span ng-repeat="img in cart.idProductDetail.product.productImages">
+                                                    <span ng-if="img.mainImage == true">
+                                                        <a href="#"><img class="cart__image" src="{{img.url}}" alt="Elastic Waist Dress - Navy / Small"></a>
+                                                    </span>
+                                                </span>
+                                               
+                                            </td>
+                                            <td class="text-left">{{cart.idProductDetail.product.name | uppercase}} <br> SKU : {{cart.idProductDetail.product.code}}</td>
+                                            <td><span ng-if="cart.idProductDetail.discount > 0">
+                                                {{cart.idProductDetail.price - (cart.idProductDetail.price * (cart.idProductDetail.discount * 0.01)) | currency:'':0}} VNĐ
+                                            </span>
+                                            <span ng-if="cart.idProductDetail.discount == 0">
+                                                {{cart.idProductDetail.price | currency:'':0}} VNĐ
+                                            </span></td>
+                                            <td> <span ng-repeat="color in listColor">
+                                                <span ng-if="color.id == cart.idColor">
+                                                    {{color.name}}
+                                                </span>
+                                            </span></td>
+                                            <td> <span ng-repeat="size in listSize">
+                                                <span ng-if="size.id == cart.idSize">
+                                                    {{size.name}}
+                                                </span>
+                                            </span></td>
+                                            <td>{{cart.quantity}}</td>
+                                            <td><span ng-if="cart.idProductDetail.discount > 0">
+                                                {{(cart.idProductDetail.price - (cart.idProductDetail.price * (cart.idProductDetail.discount * 0.01))) * cart.quantity | currency:'':0}} VNĐ
+                                            </span>
+                                            <span ng-if="cart.idProductDetail.discount == 0">
+                                                {{cart.idProductDetail.price * cart.quantity | currency:'':0}} VNĐ
+                                            </span></td>
+                                        </tr>
+                                     
+                                    </tbody>
+                                    <tfoot class="font-weight-600">
+                                        <tr>
+                                            <td colspan="6" class="text-right">Tổng tiền </td>
+                                            <td>{{tongTien1 | currency:'':0}} VNĐ</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="text-right">Phí ship </td>
+                                            <td>{{phiShip | currency:'':0}} VNĐ</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="text-right">Giảm giá </td>
+                                            <td>{{giamGia | currency:'':0}} VNĐ</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="text-right">Tổng tiền cần thanh toán</td>
+                                            <td>{{tienThanhToan | currency:'':0}} VNĐ</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <hr />
+                        <div class="discount-coupon" >
+                           
+                            <div id="coupon" class="coupon-dec tab-pane active">
+            
+                                <div id="voucher" ng-if="checkVoucher == true && voucherIs == false && voucherType === true">{{voucherName}} | Giảm {{discountVoucher}} áp dụng trên trên hóa đơn  (- {{voucherGiamGia | currency:'':0}} VNĐ)
+                                    <button ng-click="removeVoucher()" style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash-can"></i></button>
+                                </div>
+                                <div id="voucher" ng-if="checkVoucher == true && voucherIs == false && voucherType === false">{{voucherName}} | Giảm {{cashVoucher}} áp dụng trên hóa đơn  (- {{voucherGiamGia | currency:'':0}} VNĐ)
+                                    <button ng-click="removeVoucher()" style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash-can"></i></button>
+                                </div>
+                                <div id="voucher" ng-if="checkVoucher == true && voucherIs == true && voucherType === true">{{voucherName}} | Giảm {{discountVoucher}} áp dụng trên trên sản phẩm  (- {{voucherGiamGia | currency:'':0}} VNĐ)
+                                    <button ng-click="removeVoucher()" style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash-can"></i></button>
+                                  
+                                    <div>Áp dụng cho sản phẩm : </div>
+                                    <div ng-repeat="sp in listSPVoucher">
+                                        - [{{sp.productDetail.product.name}} - SKU : {{sp.productDetail.product.code}}]
+                                    </div>
+                                </div>
+                                <div id="voucher" ng-if="checkVoucher == true && voucherIs == true && voucherType === false">{{voucherName}} | Giảm tối đa {{cashVoucher}} áp dụng trên sản phẩm  (- {{voucherGiamGia | currency:'':0}} VNĐ)
+                                    <button ng-click="removeVoucher()" style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash-can"></i></button>
+                                    <div>Áp dụng cho sản phẩm : </div>
+                                    <div ng-repeat="sp in listSPVoucher">
+                                        - [{{sp.productDetail.product.name}} - SKU : {{sp.productDetail.product.code}}]
+                                    </div>
+                                </div>
+    
+                                <div id="voucher1"  ng-if="checkCoupon == true && couponType == true">{{couponName}} | Giảm {{discountCoupon}} trên hóa đơn (- {{couponGiamGia | currency:'':0}} VNĐ)
+                                    <button ng-click="removeCoupon()" style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash-can"></i></button>
+                                </div>
+                                <div id="voucher1"  ng-if="checkCoupon == true && couponType == false">{{couponName}} | Giảm {{cashCoupon}} trên hóa đơn (- {{couponGiamGia | currency:'':0}} VNĐ)
+                                    <button ng-click="removeCoupon()" style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash-can"></i></button>
+                                </div>
+                                <input id="coupon-code" required="" type="text" class="mb-3" placeholder="Áp mã giảm giá (nếu có)">
+                                <button ng-click="apMa()" class="coupon-btn btn" type="submit"><i class="fa-solid fa-gift"></i> Áp Mã Giảm Giá</button>
+                            </div>
+                        </div>
+                        <h2 class="order-title mb-4">Thông Tin Giao Hàng</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label >Tên người nhận *</label>
+                                <input id="tennguoimua1">
+                            </div>
+                            <div class="col-md-6">
+                                <label >Số điện thoại người nhận *</label>
+                                <input id="sodienthoai1">
+                            </div>
+                            <div class="col-md-6">
+                                <label >Tỉnh/TP *</label>
+                                <select class="form-control" id="tinh" ng-click="getHuyen();getXa();tinhShip()">
+                                    <option ng-repeat="tinh in listTinh" value="{{tinh.ProvinceID}}">{{tinh.ProvinceName}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label >Quận/Huyện *</label>
+                                <select class="form-control" id="huyen" ng-click="getXa();tinhShip()">
+                                    <option ng-repeat="huyen in listHuyen" value="{{huyen.DistrictID}}">{{huyen.DistrictName}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label >Phường/Xã *</label>
+                                <select class="form-control" id="xa" ng-click="tinhShip()">
+                                    <option ng-repeat="xa in listXa" value="{{xa.WardCode}}">{{xa.WardName}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label >Địa chỉ cụ thể *</label>
+                                <textarea id="diachicuthe1">
+
+                                </textarea>
+                            </div>
+                        </div>
+    
+                      
+                        
+                    </div>
+                   <a href="#cart"> <button class="coupon-btn btn">Quay Lại Giỏ Hàng</button></a>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 sm-margin-30px-bottom">
+                    <div class="create-ac-content bg-light-gray padding-20px-all">
+                        
+                            
+                            <fieldset>
+                                <div class="row">
+                                   
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="row">
+                                    <div class="form-group col-md-12 col-lg-12 col-xl-12">
+                                        <label for="input-company">Ghi Chú </label>
+                                        <textarea id="note" class="form-control resize-both" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </fieldset>
+                       
+                        <hr />
+                     
+                       
+        
+         
+                        <div class="your-payment">
+                           
+                           
+                            <h2 class="payment-title mb-3">Phương Thức Thanh Toán</h2>
+                            <div class="payment-method">
+                                <div class="payment-accordion">
+                                    <div class="radio-buttonhan1">
+                                        <input type="radio" id="pay1" name="radio-group1" checked>
+                                        <label for="pay1"><i class="fa-solid fa-wallet"></i> Thanh toán khi nhận hàng</label>
+                                        <input type="radio" id="pay2" name="radio-group1">
+                                        <label for="pay2"><i class="fa-solid fa-credit-card"></i> Thanh toán  qua VNPAY</label>
+                                      </div>
+                                    <!-- <select id="typePay">
+                                        <option value="pay1">Thanh Toán Khi Nhận Hàng</option>
+                                        <option value="pay2">Thanh Toán Trực Tuyến Với VNPAY</option>
+                                       </select> -->
+        
+                                      
+                                </div>
+        
+                                <div class="order-button-payment">
+                                    <button class="btn" value="Place order" ng-click="buy1()">Đặt Hàng</button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        
+                    </div>
+    
+                 
+                </div>
+
+           
+        </div>
+    </div>
+    
+</div>
+<!--End Body Content-->
+
+<!-- danh mục -->
+<div class="popup" ng-class="{ 'show': isDiaChi }">
+    <div class="popup-content2">
+      <!-- Nội dung của popup -->
+      <h1>Thêm địa chỉ </h1>
+      <div class="row">
+        <div class="col-md-12 ">
+          <label>Tên người nhận <span class="vaid">*</span></label> <input class="haninput" id="tennguoimua">
+       
+        </div>
+        <div class="col-md-12 ">
+            <label>SĐT người nhận <span class="vaid">*</span></label> <input class="haninput" id="sodienthoai">
+           
+          </div>
+          <div class="col-md-12 ">
+            <label>Tỉnh/Thành <span class="vaid">*</span></label>  <select class="form-control" id="tinh" ng-click="getHuyen();getXa()">
+                <option ng-repeat="tinh in listTinh" value="{{tinh.ProvinceID}}">{{tinh.ProvinceName}}</option>
+            </select>
+           
+          </div>
+          <div class="col-md-12 ">
+            <label>Quận/Huyện <span class="vaid">*</span></label>  <select class="form-control" id="huyen" ng-click="getXa()">
+                <option ng-repeat="huyen in listHuyen" value="{{huyen.DistrictID}}">{{huyen.DistrictName}}</option>
+            </select>
+          </div>
+          <div class="col-md-12 ">
+            <label>Phường/Xã <span class="vaid">*</span></label>  <select class="form-control" id="xa">
+                <option ng-repeat="xa in listXa" value="{{xa.WardCode}}">{{xa.WardName}}</option>
+            </select>
+          </div>
+        <div class="col-md-12 ">
+          <label>Địa chỉ cụ thể </label> <textarea class="haninput1" id="diachicuthe"></textarea>
+         
+        </div>
+   <div style="padding-top: 10px;">
+    <button class="btn btn-primary" ng-click="themDiaChi()">X</button>
+    <button class="btn btn-dark" ng-click="addDiaChi()">Thêm</button>
+   </div>
+  
+     </div>
+    </div>
+  </div>
+<!-- exportbill -->
+<div style="display: none;">
+    <section id="exportbill" style="width: 1000px; height: auto; background: #f4f4f4; padding: 50px 60px; position: relative; margin: 20px auto; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);font-family: Tahoma;">
+      <div class="header">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 30px;" class="i_row">
+          <div style="width: 100%" class="i_logo">
+            <img style="width: 200px; height: 100px;margin: 10px;" src="../assets/images/logo.png">
+          </div>
+          <div style="font-size: 32px; color: #00845d;text-align: center;" class="i_title">
+            <h2>Hóa Đơn</h2>
+          </div>
+        </div>
+        <div class="i_row">
+          <div class="i_number">
+            <p style="font-weight: 700; font-size: 14px; color: #333;">Mã Hóa Đơn: {{billexport.code}}</p>
+            <p style="font-weight: 700; font-size: 14px; color: #333;" ng-if="billexport.typeStatus === 0">Thông tin giao hàng : {{addressexport.fullname}} - {{addressexport.phone}} | {{addressexport.address}}, {{addressexport.wardName}}, {{addressexport.districtName}}, {{addressexport.cityName}}</p>
+            <p style="font-weight: 700; font-size: 14px; color: #333;">Phương thức thanh toán : {{billexport.payType === 0 ? 'Tiền mặt' : 'Online qua VNPay'}}</p>
+            <p style="font-weight: 700; font-size: 14px; color: #333;">Phương thức mua hàng : {{billexport.typeStatus === 1 ? 'Mua tại quầy' : 'Mua online'}}</p>
+            <p style="font-weight: 700; font-size: 14px; color: #333;">Trạng thái đơn hàng : <span style="color: #00845d;">{{billexport.status === 0 ? 'Chờ xác nhận' : billexport.status === 1 ? 'Chờ giao hàng' : billexport.status === 2 ? 'Đang giao hàng' : billexport.status === 3 ? 'Đã giao hàng' : billexport.status === 4 ? 'Đã hủy' : billexport.status === 5 ? 'Đổi trả' : ''}}</span></p>
+            <p style="font-weight: 700; font-size: 14px; color: #333;">Trạng thái thanh toán : <span style="color: #840000;">{{billexport.payStatus === 0 ? 'Chưa thanh toán' : billexport.payStatus === 1 ? 'Đã thanh toán' : ''}}</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="i_table">
+          <div class="i_table_head">
+            <div style="display: flex; color: #fff; border-radius: 5px 5px 0 0;" class="i_row">
+              <div style="width: 45%;" class="i_col">
+                <p style="font-weight: 700; font-size: 14px;color: #333;">Sản Phẩm</p>
+              </div>
+              <div style="width: 15%;" class="i_col">
+                <p style="font-weight: 700; font-size: 14px;color: #333;">Số Lượng</p>
+              </div>
+              <div style="width: 20%;" class="i_col">
+                <p style="font-weight: 700; font-size: 14px;color: #333;">Đơn Giá</p>
+              </div>
+              <div style="width: 20%;" class="i_col">
+                <p style="font-weight: 700; font-size: 14px;color: #333;">Thành Tiền</p>
+              </div>
+            </div>
+          </div>
+          <div class="i_table_body">
+            <div class="i_row" style="display: flex;align-items: center;" ng-repeat="bill in listItemExport">
+              <div style="width: 45%;" class="i_col">
+                <span ng-repeat="img in bill.productDetail.product.productImages">
+                    <span ng-if="img.mainImage == true">
+                      <img style="width: 50px; height: 50px;" src="{{img.url}}">
+                    </span>
+                  </span>
+                <div class="list-view-item__title">
+                  {{bill.productDetail.product.name | uppercase}}
+                  <br>
+                  SKU : {{bill.productDetail.product.code}}
+                </div>
+                <div class="cart__meta-text">
+                  Màu:
+                  <span ng-repeat="color in listColor">
+                    <span ng-if="color.id == bill.idColor">
+                      {{color.name}}
+                    </span>
+                  </span>
+                  <br>
+                  Kích Thước:
+                  <span ng-repeat="size in listSize">
+                    <span ng-if="size.id == bill.idSize">
+                      {{size.name}}
+                    </span>
+                  </span>
+                  <br>
+                </div>
+              </div>
+              <div style="width: 15%;" class="i_col">
+                <p>{{bill.quantity}}</p>
+              </div>
+              <div style="width: 20%;" class="i_col">
+                <p>{{bill.unitPrice | currency:'':0}}</p>
+              </div>
+              <div style="width: 20%;" class="i_col">
+                <p>{{bill.unitPrice * bill.quantity | currency:'':0}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="i_table_foot">
+            <div style="display: flex;" class="i_row">
+              <div style="width: 25%;" class="i_col">
+                <p></p>
+              </div>
+              <div style="width: 25%;" class="i_col">
+                <p></p>
+              </div>
+              <div style="width: 25%;" class="i_col">
+                <p style="font-weight: 700; font-size: 14px; color: #333;">Tổng Tiền</p>
+                <p style="font-weight: 700; font-size: 14px; color: #333;">Phí Ship</p>
+                <p style="font-weight: 700; font-size: 14px; color: #333;">Giảm Giá</p>
+              </div>
+              <div style="width: 25%;" class="i_col">
+                <p style="color: #333;">{{billexport.totalPrice | currency:'':0}}</p>
+                <p style="color: #333;">{{billexport.shipPrice | currency:'':0}}</p>
+                <p style="color: #333;">{{billexport.totalPriceLast | currency:'':0}}</p>
+              </div>
+            </div>
+            <div class="i_row grand_total_wrap">
+              <div style="width: 100%;" class="i_col">
+              </div>
+              <div style="width: 100%; background: #00845d; color: #fff; padding: 10px 15px; border-radius: 0 0 5px 5px;" class="i_col grand_total">
+                <p style="display: flex; justify-content: space-between; color: white;font-weight: bold;">
+                  <span>Tổng Tiền Thanh Toán :</span>
+                  <span>{{billexport.totalPrice + billexport.shipPrice - billexport.totalPriceLast | currency:'':0}} VNĐ</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <div style="text-align: center; font-weight: bold; color: #333;">Cảm ơn bạn đã mua sắm tại Lives Store! <br>
+            Chúc bạn một ngày tốt lành.
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+      

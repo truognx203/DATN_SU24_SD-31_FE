@@ -1,0 +1,282 @@
+    <!--Body Content-->
+    <div id="page-content" style="margin-top: 150px;">
+    
+        
+        <div class="container-fluid">
+        	<div class="row">
+            	<!--Sidebar-->
+            	<div class="col-12 col-sm-12 col-md-3 col-lg-2 sidebar filterbar">
+                	<div class="closeFilter d-block d-md-none d-lg-none"><i class="icon icon anm anm-times-l"></i></div>
+                	<div class="sidebar_tags">
+                        <div class="widget-title"><h2><i class="fa-solid fa-filter"></i> Lọc</h2></div>
+                    	<!--Danh mục-->
+                        <div>
+                            <input ng-keyup="filter()" id="tentimkiem" class="form-select-sm" placeholder="Nhập tên cần tìm kiếm...">
+                        </div>
+                        <div class="sidebar_widget filterBox filter-widget">
+    
+                            <div class="widget-title"><h2>Danh Mục</h2></div>
+                            <select id="danhmuc" class="form-select-sm" ng-click="filter()">
+                                <option value="">Tất cả danh mục</option>
+                                <option ng-repeat="danhmuc in listCategory" value="{{danhmuc.id}}">
+                                  {{danhmuc.name}}</option></select>
+                                 
+                           
+                        </div>
+                        <!--End Danh mục-->
+                        <!--Price Filter-->
+                        <div class="sidebar_widget filterBox filter-widget gia1">
+                            <div class="widget-title">
+                            	<h2>Khoảng Giá</h2>
+                            </div>
+                          
+                            <div class="range-slide1">
+                                <div class="slide1">
+                                  <div class="line1" id="line" style="left: 0%; right: 0%;"></div>
+                                  <span class="thumb1" id="thumbMin" style="left: 0%;"></span>
+                                  <span class="thumb1" id="thumbMax" style="left: 100%;"></span>
+                                </div>
+                                <input id="rangeMin" ng-click="filter()" type="range" max="9999999" min="0" step="1" value="0">
+                                <input id="rangeMax" ng-click="filter()"  type="range" max="9999999" min="0" step="1" value="9999999">
+                              </div>
+                              <div class="display">
+                                Từ
+                                <span id="min">0 đ</span>
+                                đến
+                                <span id="max">9,999,999 đ</span>
+                              </div>
+                          
+                       
+                    </div>
+                    <div class="sidebar_widget filterBox filter-widget gia1">
+                        <div class="widget-title">
+                            <h2>Trọng Lượng</h2>
+                        </div>
+                      
+                        <div class="range-slide1">
+                            <div class="slide1">
+                              <div class="line1" id="lineTL" style="left: 0%; right: 0%;"></div>
+                              <span class="thumb1" id="thumbMinTL" style="left: 0%;"></span>
+                              <span class="thumb1" id="thumbMaxTL" style="left: 100%;"></span>
+                            </div>
+                            <input id="rangeMinTL" ng-click="filter()" type="range" max="3000" min="0" step="1" value="0">
+                            <input id="rangeMaxTL" ng-click="filter()" type="range" max="3000" min="0" step="1" value="3000">
+                          </div>
+                          <div class="display">
+                            Từ
+                            <span id="minTL">0</span>
+                            đến
+                            <span id="maxTL">3000</span>
+                          </div>
+                      
+                   
+                </div>
+                        <!--End Price Filter-->
+                        <!--Size Swatches-->
+                        <div class="sidebar_widget filterBox filter-widget size-swacthes">
+                            <div class="widget-title"><h2>Kích Thước</h2></div>
+                            <select id="kichthuoc" class="form-select-sm" ng-click="filter()">
+                                <option value="">Tất cả kích thước</option>
+                                <option ng-repeat="kt in listSize" value="{{kt.id}}">
+                                  {{kt.name}}</option></select>
+                        </div>
+                        <!--End Size Swatches-->
+                        <!--Color Swatches-->
+                        <div class="sidebar_widget filterBox filter-widget size-swacthes">
+                            <div class="widget-title"><h2>Màu Sắc</h2></div>
+                            <select id="mausac" class="form-select-sm" ng-click="filter()">
+                                <option value="">Tất cả màu sắc</option>
+                                <option ng-repeat="ms in listColor" value="{{ms.id}}">
+                                  {{ms.name}}</option></select>
+                        </div>
+                        <!--End Color Swatches-->
+                        <!--Brand-->
+                        <div class="sidebar_widget filterBox filter-widget">
+                            <div class="widget-title"><h2>Thương Hiệu</h2></div>
+                            <select id="thuonghieu" class="form-select-sm" ng-click="filter()">
+                                <option value="">Tất cả thương hiệu</option>
+                                <option ng-repeat="th in listBrand" value="{{th.id}}">
+                                  {{th.name}}</option></select>
+                        </div>
+                        <!--End Brand-->
+                          <!--Brand-->
+                          <div class="sidebar_widget filterBox filter-widget">
+                            <div class="widget-title"><h2>Chất Liệu</h2></div>
+                            <select id="chatlieu" class="form-select-sm" ng-click="filter()">
+                                <option value="">Tất cả chất liệu</option>
+                                <option ng-repeat="th in listMaterial" value="{{th.id}}">
+                                  {{th.name}}</option></select>
+                        </div>
+                        <!--End Brand-->
+                       
+                      
+                      
+                        
+                       
+                    </div>
+                </div>
+                <!--End Sidebar-->
+                <!--Main Content-->
+                <div class="col-12 col-sm-12 col-md-9 col-lg-10 main-col">
+                	<div class="productList">
+                    	<!--Toolbar-->
+                        <button type="button" class="btn btn-filter d-block d-md-none d-lg-none"> Product Filters</button>
+                    	<div class="toolbar">
+                        	<div class="filters-toolbar-wrapper">
+                            	<div class="row">
+                
+                                   
+                                    <div class="col-4 col-md-4 col-lg-4">
+                                    	<div class="filters-toolbar__item">
+                                      		<label for="SortBy" class="hidden">Sắp xếp theo</label>
+                                      		<select name="SortBy" id="SortBy" class="filters-toolbar__input filters-toolbar__input--sort" ng-click="sort()">
+                                                <option value="sort" selected="selected">Sắp xếp theo</option>
+                                                <option value="sort1">Sắp xếp theo tên, A-Z</option>
+                                                <option value="sort2">Sắp xếp theo tên, Z-A</option>
+                                                <option value="sort3">Giá tăng dần</option>
+                                                <option value="sort4">Giá giảm dần</option>
+                                                <!-- <option value="sort5">Ngày từ cũ đế</option>
+                                                <option value="sort6">Giá giảm dần</option> -->
+                                               
+                                      		</select>
+                                      		<input class="collection-header__default-sort" type="hidden" value="manual">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Toolbar-->
+                        <div class="grid-products grid--view-items">
+                            <div class="row">
+                                <div ng-if="list.length > 0 && sp.status == 0" ng-repeat="sp in pager.items" class="col-6 col-sm-6 col-md-3 col-lg-3 item grid-view-item style2">
+                                    <div class="grid-view_image">
+                                        <!-- start product image -->
+                                        <a href="#/detail/{{sp.id}}" class="grid-view-item__link">
+                                            <span ng-if="sp.product.productImages.length >= 2">
+                                                <span ng-repeat="image in sp.product.productImages">
+                                                    <span ng-if="image.mainImage == true">
+                                                        <!-- image -->
+                                                <!-- <h3>{{image.url}}</h3> -->
+                                                <img style="height: 350px;border-radius: 20px;" class="grid-view-item__image primary blur-up lazyload"  src="{{image.url}}" alt="Ảnh sản phẩm" title="product">
+                                                <!-- End image -->
+                                                    </span>
+                                                    <!-- <h3>{{sp.product.productImages[0].url}}</h3> -->
+                                                    <span ng-if="image.mainImage == false">
+                                                    <!-- Hover image -->
+                                                <img style="height: 350px;border-radius: 20px;" class="grid-view-item__image hover blur-up lazyload"  src="{{sp.product.productImages[0].url}}" alt="image" title="product">
+                                                <!-- End hover image -->
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span ng-if="sp.product.productImages.length == 1">
+                                                <span ng-repeat="image in sp.product.productImages">
+
+                                                   
+                                                        <!-- image -->
+                                                <img style="height: 350px;border-radius: 20px;" class="grid-view-item__image primary blur-up lazyload"  src="{{image.url}}" alt="Ảnh sản phẩm" title="product">
+                                                <!-- End image -->
+                                                    
+                                                    
+                                                    <!-- Hover image -->
+                                                <img style="height: 350px;border-radius: 20px;" class="grid-view-item__image hover blur-up lazyload"  src="{{image.url}}" alt="image" title="product">
+                                                <!-- End hover image -->
+                                                   
+                                                </span>
+                                            </span>
+                                           
+                                            
+                                            
+                                           	<!-- product label -->
+								<div class="product-labels rectangular">
+									<span ng-if="sp.discount > 0">
+										<span class="lbl on-sale">-{{sp.discount}}%</span>
+									</span>
+									
+										 <!-- <span class="lbl pr-label1">new</span> -->
+										</div>
+									<!-- End product label -->
+                                        </a>
+                                        <!-- end product image -->
+                                        <!--start product details -->
+                                        <div class="product-details hoverDetails text-center mobile">
+                                        
+                                            
+                                            <!-- product button -->
+                                            <div class="button-set">
+                                                
+                                                <div class="btn">
+                                                    <a href="#detail/{{sp.id}}">
+                                                        Xem chi tiết
+                                                    </a>
+                                                </div>
+                                                
+                                            </div>
+                                            <!-- end product button -->
+                                        </div>
+                                            <!-- product name -->
+                                            <div class="product-name">
+                                                <a href="#/detail/{{sp.id}}"><h3>{{sp.product.name}}</h3></a>
+                                            </div>
+                                            <!-- End product name -->
+                                            <div class="product-price">
+                                                <span ng-if="sp.discount > 0">
+                                                    <span class="old-price">{{sp.price | currency:'':0}} VNĐ</span>
+                                                    <span class="price">{{sp.price - (sp.price * (sp.discount * 0.01)) | currency:'':0}} VNĐ</span>
+                                                </span>
+            
+                                                
+                                                <span ng-if="sp.discount == 0">
+            
+                                                    <span class="price">{{sp.price | currency:'':0}} VNĐ</span>
+                                                </span>
+                                                
+                                            </div>
+                                            <!-- <div class="product-review">
+                                                <i class="font-13 fa fa-star"></i>
+                                                <i class="font-13 fa fa-star"></i>
+                                                <i class="font-13 fa fa-star"></i>
+                                                <i class="font-13 fa fa-star-o"></i>
+                                                <i class="font-13 fa fa-star-o"></i>
+                                            </div> -->
+                                            <!-- End product price -->
+                                        <!-- Variant -->
+                                        <!-- <ul class="swatches text-center" ng-repeat="img in sp.product.productImages">
+                                            <li class="swatch medium rounded"><img style="height: 50px;" src="{{img.url}}" alt="image" /></li>
+                
+                                        </ul> -->
+                                        <!-- End Variant -->
+                                        <!-- End product details -->
+                                        
+                                    </div>
+                        </div>
+                       
+                    </div>
+                    <div ng-if="list.length == 0">
+                        <center>
+                         <img src="./assets/images/inbox.png">
+                         <h3>Không có sản phẩm nào !</h3>
+                        </center>
+                     </div>
+                </div>
+                <div class="text-center" ng-if="list.length > 0">
+                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                      <button ng-click="pager.first()" type="button"
+                              class="btn btn-outline-secondary"><i class="fa-solid fa-angles-left"></i></button>
+                      <button ng-click="pager.prev()" type="button"
+                              class="btn btn-outline-secondary"><i class="fa-solid fa-angle-left"></i></button>
+                      <button type="button" class="btn btn-outline-secondary">{{pager.page+1}}
+                        of
+                        {{pager.count}}</button>
+                      <button ng-click="pager.next()" type="button"
+                              class="btn btn-outline-secondary"><i class="fa-solid fa-angle-right"></i></button>
+                      <button ng-click="pager.last()" type="button"
+                              class="btn btn-outline-secondary"><i class="fa-solid fa-angles-right"></i></button>
+                    </div>
+                  </div>
+                <!--End Main Content-->
+            </div>
+        </div>
+    </div>
+    <!--End Body Content-->
+    

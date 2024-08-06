@@ -1,0 +1,96 @@
+<h3>Thống Kê</h3>
+<div class="row">
+    <div class="col-md-3">
+        <div class="salestk">
+            <p class="labeltk">Doanh số hôm nay</p>
+            <p class="amounttk">Doang thu: {{ngay.doanhThu == null ? 0 : ngay.doanhThu | currency:'':0}} VNĐ</p>
+            <p class="amounttk">{{ngay.soLuongThanhCong == null ? 0 : ngay.soLuongThanhCong}} đơn hàng thành công</p>
+            <p class="amounttk">{{ngay.soLuongHuy == null ? 0 :  ngay.soLuongHuy}} đơn hàng bị hủy</p>
+            <p class="amounttk">{{ngay.soSanPham  == null ? 0 :  ngay.soSanPham}} sản phẩm được bán</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="salestk">
+            <p class="labeltk">Doanh theo tuần này</p>
+            <p class="amounttk">Doang thu: {{tuan.doanhThu == null ? 0 : tuan.doanhThu | currency:'':0}} VNĐ</p>
+            <p class="amounttk">{{tuan.soLuongThanhCong == null ? 0 : tuan.soLuongThanhCong}} đơn hàng thành công</p>
+            <p class="amounttk">{{tuan.soLuongHuy == null ? 0 :  tuan.soLuongHuy}} đơn hàng bị hủy</p>
+            <p class="amounttk">{{tuan.soSanPham  == null ? 0 :  tuan.soSanPham}} sản phẩm được bán</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="salestk">
+            <p class="labeltk">Doanh số tháng này</p>
+            <p class="amounttk">Doang thu: {{thang.doanhThu == null ? 0 : thang.doanhThu | currency:'':0}} VNĐ</p>
+            <p class="amounttk">{{thang.soLuongThanhCong == null ? 0 : thang.soLuongThanhCong}} đơn hàng thành công</p>
+            <p class="amounttk">{{thang.soLuongHuy == null ? 0 :  thang.soLuongHuy}} đơn hàng bị hủy</p>
+            <p class="amounttk">{{thang.soSanPham  == null ? 0 :  thang.soSanPham}} sản phẩm được bán</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="salestk">
+            <p class="labeltk">Doanh số năm nay</p>
+            <p class="amounttk">Doang thu: {{nam.doanhThu == null ? 0 : nam.doanhThu | currency:'':0}} VNĐ</p>
+            <p class="amounttk">{{nam.soLuongThanhCong == null ? 0 : nam.soLuongThanhCong}} đơn hàng thành công</p>
+            <p class="amounttk">{{nam.soLuongHuy == null ? 0 :  nam.soLuongHuy}} đơn hàng bị hủy</p>
+            <p class="amounttk">{{nam.soSanPham  == null ? 0 :  nam.soSanPham}} sản phẩm được bán</p>
+        </div>
+    </div>
+    <!-- <div class="col-md-4">
+        <div class="salestk">
+            <p class="labeltk">Số lượng đã bán tháng này</p>
+            <p class="amounttk">{{slthang.soLuong}}</p>
+        </div>
+    </div> -->
+    <div class="col-md-12">
+        <br>
+        <div style="display: inline-flex;">
+            <span style="padding: 5px;">Từ ngày</span>
+            <input type="date" id="tungay" class="haninput" style="width: 200px;">
+            <span style="padding: 5px;">Đến ngày</span>
+            <input type="date" id="denngay" class="haninput" style="width: 200px;">
+            <button ng-click="thongKe()" class="btn btn-dark ms-4">Thống kê</button>
+          
+        </div>
+        <div style="display: none;padding: 5px; font-weight: bold;" id="tksp">
+            Tổng số lượng đã bán : {{tongSL}}<br>
+            Tổng doanh thu : {{tongDT | currency:'':0}} VNĐ
+        </div>
+    </div>
+    <div class="col-md-3 mx-auto">
+        <div class="salestk">
+            <p class="amounttk">Doang thu: {{tkslhd.doanhThu == null ? 0 : tkslhd.doanhThu | currency:'':0}} VNĐ</p>
+            <p class="amounttk">{{tkslhd.soLuongThanhCong == null ? 0 : tkslhd.soLuongThanhCong}} đơn hàng thành công</p>
+            <p class="amounttk">{{tkslhd.soLuongHuy == null ? 0 :  tkslhd.soLuongHuy}} đơn hàng bị hủy</p>
+            <p class="amounttk">{{tkslhd.soSanPham  == null ? 0 :  tkslhd.soSanPham}} sản phẩm được bán</p>
+        </div>
+    </div>
+    
+   
+    <h5 style="margin-top: 20px;">Trạng Thái Đơn Hàng</h5>
+    <div class="col-md-4">
+       
+        <canvas id="myChart1" width="150" height="150"></canvas>
+    </div>
+    <div class="col-md-8">
+    
+        <h5>TOP 5 Sản Phẩm Bán Chạy</h5>
+        <table class="table">
+            <tr>
+                <td>#</td>
+                <td>Sản Phẩm</td>
+                <td>Số lượng đã bán</td>
+                <td>Doanh thu</td>
+            </tr>
+            <tr ng-repeat="sp in pagerProductSold.items">
+                <td> {{$index + 1}}</td>
+                <td>
+                    <img style="width: 50px;height: 50px;" src="{{sp.url}}">
+                    {{sp.name}}
+                </td>
+                <td>{{sp.soLuong}}</td>
+                <td>{{sp.doanhThu | currency:'':0}} VNĐ</td>
+            </tr>
+        </table>
+    </div>
+</div>

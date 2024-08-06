@@ -1,0 +1,851 @@
+label{
+    width: 30%;
+    display: inline-block;
+}
+.add img{
+    height: 200px;
+    width: 200px;
+}
+input[type="file"]{
+    padding-top: 10px;
+    font-size: 10px;
+}
+select{
+    width: 167px;
+    height: 28px;
+}
+.anh{
+    height: 300px;
+    border: solid 2px; text-align: center; background-color: white;
+}
+
+.add{
+    padding-top: 10px;
+}
+
+.timkiem{
+    display: flex;
+    padding: 5px;
+}
+.timkiem input{
+    width: 300px;
+    margin-right: 5px;
+}
+.loc{
+    font-size: 12px;
+    padding-top: 10px;
+}
+.loc label{
+    padding-right: 10px;
+}
+.range-slide {
+    position: relative;
+    margin: 10px;
+    height: 4px;
+    width: 240px;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    height: 4px;
+    background: #ccc;
+    left: 9px;
+    right: 9px;
+}
+
+.line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 4px;
+    background-color: #c7c7c7;
+}
+
+.thumb {
+    position: absolute;
+    z-index: 2;
+    text-align: left;
+    border: 1px solid #2A3547;
+    background-color: #2A3547;
+    border-radius: 50%;
+    outline: none;
+    top: -7px;
+    height: 18px;
+    width: 18px;
+    margin-left: -9px;
+}
+
+.gia input {
+    -webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+    pointer-events: none;
+    z-index: 3;
+    height: 3px;
+    top: 0;
+    width: 100%;
+    opacity: 0;
+    margin: 0;
+}
+
+.gia input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    pointer-events: all;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.display {
+    width: 240px;
+    display: flex;
+
+}
+.display span{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+.validate{
+    color: red;
+    font-size: 12px;
+    text-align: center;
+}
+.vaid{
+    color: red;
+    font-size: 20px;
+}
+/* CSS cho popup */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+  
+  .popup-content {
+    width: 800px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    height: 700px;
+    overflow: auto;
+    scrollbar-width: thin; /* Width of the scrollbar (thin, auto, none) */
+    scrollbar-color: #333 #999; /* Scrollbar color (thumb color, track color) */
+  }
+  .popup-content1 {
+    width: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  }
+  .popup-content2 {
+    width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  }
+  .popup-content3 {
+    width: 1100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    height: 700px;
+    overflow: auto;
+    scrollbar-width: thin; /* Width of the scrollbar (thin, auto, none) */
+    scrollbar-color: #333 #999; /* Scrollbar color (thumb color, track color) */
+    
+  }
+  .popup-content4 {
+    width: 700px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    height: 500px;
+    overflow: auto;
+    scrollbar-width: thin; /* Width of the scrollbar (thin, auto, none) */
+    scrollbar-color: #333 #999; /* Scrollbar color (thumb color, track color) */
+    
+  }
+  .popup-content3::-webkit-scrollbar-thumb {
+    background-color: #333; /* Màu của nút kéo */
+}
+  
+/* Tùy chỉnh màu của track */
+.popup-content3::-webkit-scrollbar-thumb {
+   
+    background-color: #999; /* Màu của track */
+}
+  
+  /* Hiển thị popup khi có class 'show' */
+  .popup.show {
+    display: block;
+  }
+.thanhtoan select{
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+input[type=checkbox] {
+    position: relative;
+      cursor: pointer;
+      margin-right: 10px;
+}
+input[type=checkbox]:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    left: 0;
+    background-color:#e9e9e9;
+}
+input[type=checkbox]:checked:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    left: 0;
+    background-color:#00a965;
+}
+input[type=checkbox]:checked:after {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+    top: 2px;
+    left: 6px;
+}
+.image-container {
+    display: inline-block;
+    margin: 5px;
+    position: relative;
+  }
+  
+  .image-wrapper {
+    display: inline-block;
+    position: relative;
+    margin: 5px;
+  }
+  
+  .image {
+    display: block;
+  }
+  
+  .delete-button {
+    font-size: 10px;
+    height: 25px;
+    margin: 5px;
+    background-color: rgb(190, 30, 30);
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 100%;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+  }
+ .haninput {
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #5A6A85;
+    white-space: nowrap;
+    background-color: #EAEFF4;
+    border: var(--bs-border-width) solid #F6F9FC;
+    border-radius: 7px;
+    width: 270px;
+    height: 40px;
+  
+}
+.han{
+  color: #5A6A85;
+    white-space: nowrap;
+    background-color: #EAEFF4;
+    border: var(--bs-border-width) solid #F6F9FC;
+    border-radius: 7px;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+.haninput1 {
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #5A6A85;
+    background-color: #EAEFF4;
+    border: var(--bs-border-width) solid #F6F9FC;
+    border-radius: 7px;
+    width: 270px;
+    height: 80px;
+}
+.haninput2 {
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #5A6A85;
+    background-color: #EAEFF4;
+    border: var(--bs-border-width) solid #F6F9FC;
+    border-radius: 7px;
+    width: 195px;
+    height: 40px;
+    text-align: center;
+}
+
+.haninput3 {
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #5A6A85;
+    background-color: #EAEFF4;
+    border: var(--bs-border-width) solid #F6F9FC;
+    border-radius: 7px;
+    width: 255px;
+    height: 80px;
+}
+.addttsp{
+    width: 25px; /* Đặt chiều rộng */
+    height: 25px; /* Đặt chiều cao */
+     background-color: rgb(0, 56, 27); color: white; border: none; 
+    border-radius: 50%; /* Làm cho góc trở nên cong để tạo hình tròn */
+   float: right;
+   margin-right: 90px;
+   margin-top: 35px;
+}
+.addttsp1{
+    width: 25px; /* Đặt chiều rộng */
+    height: 25px; /* Đặt chiều cao */
+     background-color: rgb(0, 56, 27); color: white; border: none; 
+    border-radius: 50%; /* Làm cho góc trở nên cong để tạo hình tròn */
+    margin-left: 10px;
+
+}
+.addttsp2{
+    width: 25px; /* Đặt chiều rộng */
+    height: 25px; /* Đặt chiều cao */
+     background-color: rgb(0, 56, 27); color: white; border: none; 
+    border-radius: 50%; /* Làm cho góc trở nên cong để tạo hình tròn */
+   float: right;
+   margin-right: 30px;
+   margin-top: 10px;
+}
+.blinking-text {
+    animation: blink 1s infinite;
+    font-size: 11px;color: red;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+    
+}
+.buttonbtn {
+    width: 100px;
+
+}
+
+.tablehan {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.rowhan {
+    display: table-row;
+}
+
+.cellhan {
+    display: table-cell;
+    border: 1px solid #333;
+    padding: 8px;
+    text-align: center;
+}
+
+.headerhan {
+    background-color: #333;
+    color: #fff;
+}
+
+.rowhan:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.rowhan:hover {
+    background-color: #ddd;
+}
+
+/* Hide the default radio button */
+.custom-radio input[type="radio"] {
+    display: none;
+}
+
+/* Style the custom radio button */
+.custom-radio label {
+    position: relative;
+    padding-left: 25px; /* Space for the custom radio button */
+    cursor: pointer;
+    width: 200px;
+}
+
+/* Custom radio button design */
+.custom-radio label:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000; /* Border color */
+    border-radius: 50%;
+}
+
+/* Style the custom radio button when checked */
+.custom-radio input[type="radio"]:checked + label:before {
+    background-color: #000; /* Background color when checked */
+}
+  
+  
+#qrcode img{
+    width: 100px;
+    height: 100px;
+}
+#qrcode{
+    float: right;
+    padding-right: 20px;
+    padding-top: 25px;
+}
+
+
+@import url("https://fonts.googleapis.com/css2?family=Redressed&family=Ubuntu:wght@400;700&display=swap");
+
+:root {
+  --bg-clr: #ead376;
+  --white: #fff;
+  --primary-clr: #2f2929;
+  --secondary-clr: #008c56;
+}
+
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Ubuntu", sans-serif;
+}
+
+body {
+  background: var(--bg-clr);
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--primary-clr);
+  padding: 0 20px;
+} */
+
+.invoice {
+  width: 800px;
+  max-width: 100%;
+  height: auto;
+  background: var(--white);
+  padding: 50px 60px;
+  position: relative;
+  margin: 20px auto;
+}
+
+.w_15 {
+  width: 15%;
+}
+
+.w_50 {
+  width: 50%;
+}
+
+.w_55 {
+  width: 55%;
+}
+
+.p_title {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.i_row {
+  display: flex;
+}
+
+.text_right {
+  text-align: right;
+}
+
+.invoice .header .i_row {
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.invoice .header .i_row:last-child {
+  align-items: flex-end;
+}
+
+.invoice .header .i_row .i_logo p {
+  font-family: "Redressed", cursive;
+}
+
+.invoice .header .i_row .i_logo p,
+.invoice .header .i_row .i_title h2 {
+  font-size: 32px;
+  line-height: 38px;
+  color: var(--secondary-clr);
+}
+
+.invoice .header .i_row .i_address .p_title span {
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.invoice .body .i_table .i_col p {
+  font-weight: 700;
+}
+
+.invoice .body .i_table .i_row .i_col {
+  padding: 12px 5px;
+}
+
+.invoice .body .i_table .i_table_head .i_row {
+  border: 2px solid;
+  border-color: var(--primary-clr) transparent var(--primary-clr) transparent;
+}
+
+.invoice .body .i_table .i_table_body .i_row:last-child {
+  border-bottom: 2px solid var(--primary-clr);
+}
+
+.invoice .body .i_table .i_table_foot .grand_total_wrap {
+  margin-top: 20px;
+}
+
+.invoice .body .i_table .i_table_foot .grand_total_wrap .grand_total {
+  background: var(--secondary-clr);
+  color: var(--white);
+  padding: 10px 15px;
+}
+
+.invoice .body .i_table .i_table_foot .grand_total_wrap .grand_total p {
+  display: flex;
+  justify-content: space-between;
+}
+
+.invoice .footer {
+  margin-top: 30px;
+}
+
+.top_line,
+.bottom_line {
+  width: 25px;
+  height: 175px;
+  z-index: 1;
+  position: absolute;
+  background: var(--secondary-clr);
+}
+
+.top_line {
+  top: 0;
+  left: 0;
+}
+
+.bottom_line {
+  bottom: 0;
+  right: 0;
+}
+
+.top_line:before,
+.bottom_line:before {
+  content: "";
+  position: absolute;
+  border: 13px solid;
+}
+
+.top_line:before {
+  bottom: 0;
+  left: 0px;
+  border-color: transparent var(--white) var(--white) transparent;
+}
+
+.bottom_line:before {
+  top: 0;
+  left: 0px;
+  border-color: var(--white) transparent transparent var(--white);
+}
+/* Lớp cho phần tử chứa hiệu ứng loading */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Màu nền với độ trong suốt */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Đảm bảo hiệu ứng loading nằm trên các phần tử khác */
+}
+
+/* Lớp cho hiệu ứng loading */
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.3);
+  border-top: 4px solid #00873d;
+  border-radius: 100%;
+  width: 40x;
+  height: 40px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* Hide the default radio buttons */
+.radio-button-group input[type="radio"] {
+  display: none;
+}
+
+/* Style the labels as buttons */
+.radio-button-group label {
+  display: inline-block;
+  padding: 10px 10px;
+  background-color: #00501b;
+  color: #fff;
+  border: 1px solid #00501b;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 5px;
+  width: 150px;
+  height: 70px;
+  font-weight: bold;
+  
+  
+}
+
+/* Style the labels when the radio button is checked */
+.radio-button-group input[type="radio"]:checked + label {
+  background-color: #ac2d1f;
+  border: 1px solid #ac2d1f;
+}
+
+/* Styling for the timeline container */
+.timeline {
+  display: flex;
+  width: 100%;
+}
+
+/* Styling for the timeline items */
+.timeline-item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding-right: 10px;
+
+}
+
+/* Styling for the timeline icon */
+.timeline-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #00773f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.timeline-icon1 {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #770000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.timeline-icon2 {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #4f0077;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+/* Styling for the timeline content */
+.timeline-content {
+  background-color: #ffffff;
+  border: 1px solid #3498db;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Add transitions for hover effect */
+.timeline-item:hover .timeline-content {
+  background-color: #e0e0e0;
+  transition: background-color 0.3s;
+}
+.custom-border {
+  border: 2px solid #3498db; /* Đường viền độ dày 2px màu xanh */
+  border-radius: 10px; /* Bo tròn đường viền bằng 10px */
+  padding: 20px; /* Khoảng cách giữa nội dung và đường viền */
+  background-color: #ffffff; /* Màu nền của phần bên trong */
+  margin-top: 20px;
+}
+.custom-border h6{
+  padding-bottom: 5px;
+}
+.button-bill{
+  background-color: rgb(0, 134, 89); width: 100%; padding:5px;border-radius: 10px;color: white;
+}
+.button-bill2{
+  background-color: rgb(134, 29, 0); width: 100%; padding:5px;border-radius: 10px;color: white;
+}
+.button-bill3{
+  background-color: rgb(125, 134, 0); width: 100%; padding:5px;border-radius: 10px;color: white;
+}
+.button-bill4{
+  background-color: rgb(0, 132, 134); width: 100%; padding:5px;border-radius: 10px;color: white;
+}
+.button-bill5{
+  background-color: rgb(164, 91, 23); width: 100%; padding:5px;border-radius: 10px;color: white;
+}
+.button-bill6{
+  background-color: rgb(96, 0, 134); width: 100%; padding:5px;border-radius: 10px;color: white;
+}
+.button-bill1{
+  background-color: rgb(134, 60, 0); width: 250px; padding:5px;border-radius: 10px;color: white;
+}
+.radio-buttonhan {
+  display: inline-block;
+}
+
+.radio-buttonhan input[type="radio"] {
+  display: none;
+}
+
+.radio-buttonhan label {
+  background-color: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #00583c;
+  cursor: pointer;
+  margin: 0 -1px; /* Fix alignment issue */
+  text-align: center;
+  width: 120px;
+  margin: 3px;
+  font-weight: bold;
+  color: black;
+}
+
+.radio-buttonhan input[type="radio"]:checked + label {
+  background-color: #000000;
+  color: #fff;
+}
+
+.salestk {
+  background-color: #f0f8ff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.labeltk {
+  font-weight: bold;
+  color: #555;
+}
+
+.amounttk {
+  font-size: 16px;
+  color: #009688;
+  margin-top: 10px;
+}

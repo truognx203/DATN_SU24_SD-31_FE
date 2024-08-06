@@ -1,0 +1,95 @@
+
+<h3> Quản Lý Banner</h3>
+<div >
+  <button ng-click="themBanner()" class="btn btn-success"><i class="fa-solid fa-plus"></i> Thêm</button></div>
+<table id="tblProduct" class="table">
+  <thead>
+  <tr>
+    <td scope="col">#</td>
+    <td scope="col">ID Banner</td>
+    <td scope="col">Ảnh Banner</td>
+    <td scope="col">Nội Dung</td>
+    <td scope="col">Hành Động</td>
+  </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="b in list">
+    <td> {{$index + 1}}</td>
+    <td>{{b.id}}</td>
+    <td>
+        <img style="width: 250px; height: 100px;" src="{{b.url}}">
+    </td>
+    <td>{{b.content}}</td>
+    <td><button ng-click="suaBanner(b.id)" class="btn btn-indigo"> Sửa</button>
+      <button style="margin-top: 5px" class="btn btn-danger" ng-click="delete(b.id)"> Xóa</button>
+    </td>
+  </tr>
+
+
+</table>
+
+<!--        <paging-control paging-size="pagingSize" noofitem="dataPerPage" total-items="totalItems" display-items="displayItems"></paging-control>-->
+</div>
+
+
+<div class="popup" ng-class="{ 'show': isAddBanner }">
+    <div class="popup-content4">
+      <!-- Nội dung của popup -->
+      <h1>Thêm banner </h1>
+      <div class="row">
+        <div class="col-md-12 ">
+            <div>Ảnh banner <span class="vaid">*</span></div>
+            <img style="width: 500px; height: 250px;border: 1px solid rgba(105, 105, 105, 0.573);" id="output"/>
+
+          <div>
+            <button onclick="anhOpen()" style="border-radius: 10px;margin-top: 5px; background-color: rgb(23, 146, 82);color: white;border: none;padding: 5px;" id="uploadButtonImage">Chọn ảnh</button>
+            <input file-model="image" id="fileUpload" type="file" accept="image/*" onchange="loadFile1(event)" style="display: none;">
+          </div>
+        
+        </div>
+        <div class="col-md-12 ">
+          <label>Nội Dung </label> <textarea style="width: 600px;" class="haninput" ng-model="content"></textarea>
+         
+        </div>
+        </div>
+  
+   <div style="padding-top: 10px;">
+    <button class="btn btn-primary" ng-click="themBanner()">X</button>
+    <button class="btn btn-dark" ng-click="addBanner()">Thêm</button>
+   </div>
+  
+     
+    </div>
+  </div>
+  </div>
+  <div class="popup" ng-class="{ 'show': isUpdateBanner }">
+    <div class="popup-content4">
+      <!-- Nội dung của popup -->
+      <h1>Sửa banner </h1>
+      <div class="row">
+        <div class="col-md-12 ">
+            <div>Ảnh banner <span class="vaid">*</span></div>
+            <img id="outputbanner1" ng-if="anh != null" style="width: 500px; height: 250px;border: 1px solid rgba(105, 105, 105, 0.573);display: block;" src="{{anh}}">
+            <img style="width: 500px; height: 250px;border: 1px solid rgba(105, 105, 105, 0.573);display: none;" id="outputbanner"/>
+
+          <div>
+            <button onclick="anhOpen2()" style="border-radius: 10px;margin-top: 5px; background-color: rgb(23, 146, 82);color: white;border: none;padding: 5px;" id="uploadButtonImage">Chọn ảnh</button>
+            <input file-model="image" id="fileUpload1" type="file" accept="image/*" onchange="loadFile2(event)" style="display: none;">
+          </div>
+        
+        </div>
+        <div class="col-md-12 ">
+          <label>Nội Dung </label> <textarea id="content" style="width: 600px;" class="haninput" ng-model="content1"></textarea>
+         
+        </div>
+        </div>
+  
+   <div style="padding-top: 10px;">
+    <button class="btn btn-primary" ng-click="suaBanner(null)">X</button>
+    <button class="btn btn-dark" ng-click="updateBanner(id)">Sửa</button>
+   </div>
+  
+     
+    </div>
+  </div>
+  </div>

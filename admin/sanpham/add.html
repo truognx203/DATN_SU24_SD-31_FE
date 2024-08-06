@@ -1,0 +1,649 @@
+<div class="container-fluid">
+  <div style="float: right;">
+    <input type="file" id="fileInput" style="display: none;" accept=".xls, .xlsx">
+    <button onclick="openExel()" style="border-radius: 10px; margin-top: 5px; background-color: rgb(23, 146, 82); color: white; border: none; padding: 5px;" id="uploadButton">Chọn file</button>
+    <button class="btn btn-success" ng-click="importExel()"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
+      <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M28.875,0c-0.01953,0.00781 -0.04297,0.01953 -0.0625,0.03125l-28,5.3125c-0.47656,0.08984 -0.82031,0.51172 -0.8125,1v37.3125c-0.00781,0.48828 0.33594,0.91016 0.8125,1l28,5.3125c0.28906,0.05469 0.58984,-0.01953 0.82031,-0.20703c0.22656,-0.1875 0.36328,-0.46484 0.36719,-0.76172v-5h17c1.09375,0 2,-0.90625 2,-2v-34c0,-1.09375 -0.90625,-2 -2,-2h-17v-5c0.00391,-0.28906 -0.12109,-0.5625 -0.33594,-0.75391c-0.21484,-0.19141 -0.50391,-0.28125 -0.78906,-0.24609zM28,2.1875v4.34375c-0.13281,0.27734 -0.13281,0.59766 0,0.875v35.40625c-0.02734,0.13281 -0.02734,0.27344 0,0.40625v4.59375l-26,-4.96875v-35.6875zM30,8h17v34h-17v-5h4v-2h-4v-6h4v-2h-4v-5h4v-2h-4v-5h4v-2h-4zM36,13v2h8v-2zM6.6875,15.6875l5.46875,9.34375l-5.96875,9.34375h5l3.25,-6.03125c0.22656,-0.58203 0.375,-1.02734 0.4375,-1.3125h0.03125c0.12891,0.60938 0.25391,1.02344 0.375,1.25l3.25,6.09375h4.96875l-5.75,-9.4375l5.59375,-9.25h-4.6875l-2.96875,5.53125c-0.28516,0.72266 -0.48828,1.29297 -0.59375,1.65625h-0.03125c-0.16406,-0.60937 -0.35156,-1.15234 -0.5625,-1.59375l-2.6875,-5.59375zM36,20v2h8v-2zM36,27v2h8v-2zM36,35v2h8v-2z"></path></g></g>
+    </svg> Import Exel</button></div>
+  <div> <h3>Thêm sản phẩm</h3></div>
+
+  <form class="form-control">
+
+    <div class="row">
+
+      <div class="col-md-3 add">
+        <div>Ảnh đại diện sản phẩm <span class="vaid">*</span></div>
+        <img id="output"/>
+        <button onclick="anhOpen()" style="border-radius: 10px;margin-top: 5px; background-color: rgb(23, 146, 82);color: white;border: none;padding: 5px;" id="uploadButtonImage">Chọn ảnh</button>
+        <input file-model="image" id="fileUpload" type="file" accept="image/*" onchange="loadFile1(event)" style="display: none;">
+        <div style="margin-top: 10px">Danh sách ảnh sản phẩm</div>
+     
+          <input id="fileList" type="file" accept="image/*" multiple style="display: none;">
+          <button ng-click="openImage()" style="border-radius: 10px; margin-top: 5px; background-color: rgb(23, 146, 82); color: white; border: none; padding: 5px;" id="uploadButton">Chọn ảnh</button>
+          <div id="imagePreviewContainer" ng-repeat="image in images">
+            <div class="image-wrapper">
+            <img class="image" ng-src="{{image}}" />
+            <button class="delete-button" ng-click="deleteImage($index)"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+          </div>
+       
+       
+      </div>
+      <div class="col-md-9">
+
+        <div class="row">
+          <!-- <div class="col-md-6 add">
+            <label>Mã Sản Phẩm <span class="vaid">*</span></label> <input class="haninput" ng-model="form.product.code">
+            <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Code'">
+               {{err.defaultMessage}}
+            </span>
+            </div>
+          </div> -->
+          <div class="col-md-6 add">
+            <label>Tên Sản Phẩm <span class="vaid">*</span></label> <input class="haninput" ng-model="form.product.name">
+            <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Name'">
+               {{err.defaultMessage}}
+            </span>
+            </div>
+          </div>
+          <div class="col-md-6 add">
+            <label>Giá Bán <span class="vaid">*</span></label> <input class="haninput" ng-model="form.price">
+            <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Price'">
+               {{err.defaultMessage}}
+            </span>
+            </div> 
+          </div>
+          <div class="col-md-6 add">
+            <label> Trọng lượng (g) <span class="vaid">*</span></label> <input class="haninput" ng-model="form.weight">
+            <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Weight'">
+               {{err.defaultMessage}}
+            </span>
+            </div>
+          </div>
+          <div class="col-md-6 add" style="display: none;">
+            <label>Giảm Giá <span class="vaid">*</span></label> <input ng-model="form.discount" value="0">
+            <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Discount'">
+               {{err.defaultMessage}}
+            </span>
+            </div>
+          </div>
+          <div class="col-md-6 add">
+            <label>Mô Tả</label> <textarea class="haninput1" type="text" ng-model="form.description"></textarea>
+          </div>
+          <div class="col-md-6 add" ><button ng-click="themDanhMuc()" class="addttsp"><i class="fa-solid fa-plus"></i></button>
+            <label>Danh Mục <span class="vaid">*</span> </label>
+            <select class="haninput" id="category">
+            <option ng-repeat="danhmuc in listCategory" value="{{danhmuc.id}}">
+              {{danhmuc.name}}</option></select> 
+          </div>
+          <div class="col-md-6 add" ><button ng-click="themDeGiay()" class="addttsp"><i class="fa-solid fa-plus"></i></button>
+            <label>Đế Giầy<span class="vaid">*</span> </label>
+            <select class="haninput" id="soletype">
+            <option ng-repeat="degiay in listDeGiay" value="{{degiay.id}}">
+              {{degiay.name}}</option></select> 
+          </div>
+          <div class="col-md-6 add">
+            <button ng-click="themThuongHieu()" class="addttsp"><i class="fa-solid fa-plus"></i></button>
+            <label>Thương Hiệu <span class="vaid">*</span></label> <select  class="haninput" id="brand">
+            <option ng-repeat="thuonghieu in listBrand" value="{{thuonghieu.id}}">
+              {{thuonghieu.name}}</option></select>
+          </div>
+          <div  class="col-md-12 add">
+            Giảm Giá 
+            <span style="padding-left: 10px;"><input ng-click="giamGia()" id="giamGia"  type="checkbox"></span> 
+            <div id="giamGia1" style="display: none;" class="custom-radio">
+              <input ng-click="giamGia1()" type="radio" name="giamGia" checked id="khongGioiHan">
+              <label for="khongGioiHan">Thời gian không giới hạn</label>
+              <input ng-click="giamGia1()" type="radio" name="giamGia" id="tamThoi">
+              <label for="tamThoi">Thời gian tạm thời</label>
+            </div>
+            <div id="khongGioiHan1" style="display: none;">
+              Phần trăm giảm giá
+              <input class="haninput" id="phanTramGiamGia">
+              <div ng-repeat="err in validationErrors">
+                <span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Discount'">
+                   {{err.defaultMessage}}
+                </span>
+                </div>
+            </div>
+            <div id="tamThoi1" style="display: none;">
+              Phần trăm giảm giá
+              <input  class="haninput" id="phanTramGiamGia1">
+              <div ng-repeat="err in validationErrors">
+                <span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Discount'">
+                   {{err.defaultMessage}}
+                </span>
+                </div>
+              Ngày kết thúc
+              <input class="haninput" type="date" id="thoiGianGiamGia">
+            </div>
+          </div>
+          <!-- <div class="col-md-12 add">
+            Nhà Cung Cấp
+            <button ng-click="themNhaCungCap()" class="addttsp1"><i class="fa-solid fa-plus"></i></button>
+            <div ng-if="nhaCungCap != null" id="ncc">
+             <div> Tên NCC : {{nhaCungCap.name}} <span><button ng-click="removeNCC()" style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash-can"></i></button>
+             </span></div>
+             <div> SĐT : {{nhaCungCap.phone}}</div>
+             <div> Địa chỉ : {{nhaCungCap.address}}</div>
+             <div> Thỏa thuận : {{nhaCungCap.agree}}</div>
+
+            </div>
+            </div> -->
+          <div class="col-md-12 add">
+      
+            <label>Chất Liệu <span class="vaid">*</span></label>
+            <div>
+              
+              <span style="padding-left: 5px" ng-repeat="chatlieu in listMaterial"><input id="Material{{chatlieu.id}}"  type="checkbox" value="{{chatlieu.id}}"> {{chatlieu.name}}</span> <button ng-click="themChatLieu()" class="addttsp1"><i class="fa-solid fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="col-md-12 add">
+            <span style="padding-right: 20px;">Màu Sắc <span class="vaid">*</span></span>
+            <span ng-repeat="mausac in listColor">
+                              <input type="checkbox" id="Color{{mausac.id}}" ng-click="checkbox(mausac.id)">{{mausac.name}}
+                         </span>
+                         <button ng-click="themMauSac()" class="addttsp1"><i class="fa-solid fa-plus"></i></button>
+          <div>
+            <div ng-repeat="mausac in listColor">
+              <div ng-show="colorStates[mausac.id]" style="padding-top: 15px;">
+                  <label>Số lượng màu {{ mausac.name }}</label>
+                  <br>
+                  <button style="border-radius: 5px;width: 25px;background-color: black;color: white;" ng-click="themkichthuoc(mausac.id)"><i class="fa-solid fa-plus"></i></button>
+                  <!-- Hiển thị danh sách kích thước và số lượng -->
+                  <div ng-repeat="(idColor, sizes) in colorSizes">
+                    <!-- Tạo một biến để lưu trữ tên màu sắc tương ứng -->
+                    <!-- Hiển thị danh sách kích thước cho màu sắc -->
+                   <span ng-if="idColor == mausac.id">
+                        <span ng-repeat="s in listSize">
+                          <span ng-repeat="size in sizes">
+                          <span ng-if="size.size == s.id">
+                            <span style="padding-left: 10px; padding-bottom: 10px">Size</span> {{ s.name }}  <input class="han" id="Color{{ mausac.id }}Size{{ s.id }}" type="number" value="{{size.quantity}}" style="width: 50px">
+                            <button ng-click="removeItemBySize(mausac.id,size.size)" style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash"></i></button>
+                          </span>
+                        </span>
+                      </span>
+                  
+                   </span>
+                </div>
+                  <!-- <span ng-repeat="size in listSize">
+                     
+                  </span> -->
+              </div>
+          </div>
+          
+          <!-- <div class="col-md-12 add">
+            Chương trình khuyến mãi <button ng-click="themChuongTrinh()" class="addttsp1"><i class="fa-solid fa-plus"></i></button>
+            
+            <span ng-repeat="v in listVoucher">
+              <span ng-repeat="vo in voucherList">
+                <span ng-if="v.id == vo.id">
+                 <div >
+                 <input type="hidden" id="Voucher{{v.id}}" value="{{v.id}}">- {{v.name}} [{{v.code}}]
+                  <button ng-click="removeVoucher(v.id)" style="font-size: 20px;background-color: white;color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-xmark"></i></button>
+                 </div>
+                </span>
+              </span>
+            </span>
+            </div> -->
+
+            <div class="mb-1 mt-4">
+              <label class="form-label">Trạng thái bán hàng:</label>
+          </div>
+          <!-- Radio button "Đang bán" -->
+          <div class="form-check" ng-init="form.status = 0">
+              <input class="form-check-input" type="radio" value="0" ng-model="form.status" name="status" id="selling" ng-checked="form.status == 0">
+              <label class="form-check-label" for="selling">
+                  Đang bán
+              </label>
+          </div>
+  
+          <!-- Radio button "Tạm ngừng bán" -->
+          <div class="form-check">
+              <input class="form-check-input"  value="1" type="radio"  ng-model="form.status" name="status" id="paused" ng-checked="form.status == 1">
+              <label class="form-check-label" for="paused">
+                  Tạm ngừng bán
+              </label>
+          </div>
+  
+          
+            <!-- <div style="font-size: 12px;color: red;padding-top: 10px">* Số lượng size không có mặc định là 0</div> -->
+          </div>
+        </div>
+
+        <div style="padding-top: 30px;">
+<!--                <button style="margin-right: 10px"  class="btn btn-info" ng-click="reset()"><i class="fa-solid fa-rotate-right"></i> Reset</button>-->
+          <button  class="btn btn-danger" ng-click="add()"><i class="fa-solid fa-plus"></i> Thêm</button></div>
+
+      </div>
+    </div>
+    </div>
+  </form>
+</div>
+<div class="popup" ng-class="{ 'show': isPopupVisible }">
+  <div class="popup-content1">
+    <!-- Nội dung của popup -->
+    <h1>Thêm số lượng </h1>
+    <button ng-click="themKichThuoc()" class="addttsp2"><i class="fa-solid fa-plus"></i></button>
+    <select class="haninput2" id="sizehan">
+      <option ng-repeat="size in listSize" value="{{size.id}}">Size {{size.name}}</option>
+  </select>
+ <div style="padding-top: 10px;">
+  <input class="input-group-text" type="number" id="quantitysize" placeholder="Số lượng">
+ </div>
+ <div style="padding-top: 10px;">
+  <button class="btn btn-primary" ng-click="themkichthuoc()">X</button>
+  <button class="btn btn-dark" ng-click="addItem()">Thêm</button>
+ </div>
+
+   
+  </div>
+</div>
+<!-- thương hiệu -->
+<div class="popup" ng-class="{ 'show': isBrand }">
+  <div class="popup-content2">
+    <!-- Nội dung của popup -->
+    <h1>Thêm thương hiệu </h1>
+    <div class="row">
+      <div class="col-md-12 ">
+        <span>Tên Thương Hiệu <span class="vaid">*</span></span> <input class="haninput" ng-model="thuonghieuname">
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'brandRequest' && err.field == 'name'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-12 ">
+        <label>Mô Tả </label> <textarea class="haninput" ng-model="thuonghieudescription"></textarea>
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'brandRequest' && err.field == 'description'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+
+ <div style="padding-top: 10px;">
+  <button class="btn btn-primary" ng-click="themThuongHieu()">X</button>
+  <button class="btn btn-dark" ng-click="addThuongHieu()">Thêm</button>
+ </div>
+
+   
+  </div>
+</div>
+</div>
+<!-- danh mục -->
+<div class="popup" ng-class="{ 'show': isDanhMuc }">
+  <div class="popup-content2">
+    <!-- Nội dung của popup -->
+    <h1>Thêm danh mục </h1>
+    <div class="row">
+      <div class="col-md-12 ">
+        <label>Tên Danh Mục <span class="vaid">*</span></label> <input class="haninput" value="" ng-model="danhmucname">
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'categoryRequest' && err.field == 'name'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-12 ">
+        <label>Mô Tả </label> <textarea class="haninput1" ng-model="danhmucdescription"></textarea>
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'categoryRequest' && err.field == 'description'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+ <div style="padding-top: 10px;">
+  <button class="btn btn-primary" ng-click="themDanhMuc()">X</button>
+  <button class="btn btn-dark" ng-click="addDanhMuc()">Thêm</button>
+ </div>
+
+   </div>
+  </div>
+</div>
+
+
+<div class="popup" ng-class="{ 'show': isSoleType }">
+  <div class="popup-content2">
+    <!-- Nội dung của popup -->
+    <h1>Thêm đế giầy </h1>
+    <div class="row">
+      <div class="col-md-12 ">
+        <label>Tên Đế Giầy <span class="vaid">*</span></label> <input class="haninput" value="" ng-model="degiayname">
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'categoryRequest' && err.field == 'name'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-12 ">
+        <label>Mô Tả </label> <textarea class="haninput1" ng-model="degiaydescription"></textarea>
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'categoryRequest' && err.field == 'description'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+ <div style="padding-top: 10px;">
+  <button class="btn btn-primary" ng-click="themDeGiay()">X</button>
+  <button class="btn btn-dark" ng-click="addDeGiay()">Thêm</button>
+ </div>
+
+   </div>
+  </div>
+</div>
+
+<div class="popup" ng-class="{ 'show': isToe }">
+  <div class="popup-content2">
+    <!-- Nội dung của popup -->
+    <h1>Thêm mũi giày </h1>
+    <div class="row">
+      <div class="col-md-12 ">
+        <label>Tên Mũi Giày <span class="vaid">*</span></label> <input class="haninput" ng-model="toename">
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'toeRequest' && err.field == 'name'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-12 ">
+        <label>Mô Tả </label> <textarea class="haninput1" ng-model="toedescription"></textarea>
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'toeRequest' && err.field == 'description'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+    </div>
+ <div style="padding-top: 10px;">
+  <button class="btn btn-primary" ng-click="themMuiGiay()">X</button>
+  <button class="btn btn-dark" ng-click="addMuiGiay()">Thêm</button>
+ </div>
+
+   
+  </div>
+</div>
+<div class="popup" ng-class="{ 'show': isSole }">
+  <div class="popup-content2">
+    <!-- Nội dung của popup -->
+    <h1>Thêm đế giày </h1>
+    <div class="row">
+      <div class="col-md-12 ">
+        <label>Tên Đế Giày <span class="vaid">*</span></label> <input class="haninput" ng-model="solename">
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'soleRequest' && err.field == 'name'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-12 ">
+        <label>Mô Tả </label> <textarea class="haninput1" ng-model="soledescription"></textarea>
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'soleRequest' && err.field == 'description'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+    </div>
+   
+ <div style="padding-top: 10px;">
+  <button class="btn btn-primary" ng-click="themDeGiay()">X</button>
+  <button class="btn btn-dark" ng-click="addDeGiay()">Thêm</button>
+ </div>
+
+   
+  </div>
+</div>
+
+<div class="popup" ng-class="{ 'show': isShoelace }">
+  <div class="popup-content2">
+    <!-- Nội dung của popup -->
+    <h1>Thêm dây giày </h1>
+    <div class="row">
+      <div class="col-md-12 ">
+        <label>Tên Dây Giày <span class="vaid">*</span></label> <input class="haninput" ng-model="shoelacename">
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'shoelaceRequest' && err.field == 'name'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-12 ">
+        <label>Mô Tả </label> <textarea class="haninput1" ng-model="shoelacedescription"></textarea>
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'shoelaceRequest' && err.field == 'description'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+    </div>
+ <div style="padding-top: 10px;">
+  <button class="btn btn-primary" ng-click="themDayGiay()">X</button>
+  <button class="btn btn-dark" ng-click="addDayGiay()">Thêm</button>
+ </div>
+
+   
+  </div>
+</div>
+<div class="popup" ng-class="{ 'show': isHeelcushion }">
+  <div class="popup-content2">
+    <!-- Nội dung của popup -->
+    <h1>Thêm lót giày </h1>
+    <div class="row">
+      <div class="col-md-12 ">
+        <label>Tên Lót Giày <span class="vaid">*</span></label> <input class="haninput" ng-model="heelcushionname">
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'heelcushionRequest' && err.field == 'name'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-12 ">
+        <label>Mô Tả </label> <textarea class="haninput1" ng-model="heelcushiondescription"></textarea>
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'heelcushionRequest' && err.field == 'description'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+    </div>
+ <div style="padding-top: 10px;">
+  <button class="btn btn-primary" ng-click="themLotGiay()">X</button>
+  <button class="btn btn-dark" ng-click="addLotGiay()">Thêm</button>
+ </div>
+
+   
+  </div>
+</div>
+<div class="popup" ng-class="{ 'show': isDesign }">
+  <div class="popup-content2">
+    <!-- Nội dung của popup -->
+    <h1>Thêm thiết kế </h1>
+    <div class="row">
+      <div class="col-md-12 ">
+        <label>Tên Thiết Kế <span class="vaid">*</span></label> <input class="haninput" ng-model="designname">
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'designRequest' && err.field == 'name'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-12 ">
+        <label>Mô Tả </label> <textarea class="haninput1" ng-model="designdescription"></textarea>
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'designRequest' && err.field == 'description'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+    </div>
+   
+
+ <div style="padding-top: 10px;">
+  <button class="btn btn-primary" ng-click="themThietKe()">X</button>
+  <button class="btn btn-dark" ng-click="addThietKe()">Thêm</button>
+ </div>
+
+   
+  </div>
+</div>
+<div class="popup" ng-class="{ 'show': isMaterial }">
+  <div class="popup-content2">
+    <!-- Nội dung của popup -->
+    <h1>Thêm chất liệu </h1>
+    <div class="row">
+      <div class="col-md-12 ">
+        <label>Tên Chất Liệu <span class="vaid">*</span></label> <input class="haninput" ng-model="materialname">
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'materialRequest' && err.field == 'name'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-12 ">
+        <label>Mô Tả </label> <textarea class="haninput1" ng-model="materialdescription"></textarea>
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'materialRequest' && err.field == 'description'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+    </div>
+   
+
+ <div style="padding-top: 10px;">
+  <button class="btn btn-primary" ng-click="themChatLieu()">X</button>
+  <button class="btn btn-dark" ng-click="addChatLieu()">Thêm</button>
+ </div>
+
+   
+  </div>
+</div>
+<div class="popup" ng-class="{ 'show': isColor }">
+  <div class="popup-content2">
+    <!-- Nội dung của popup -->
+    <h1>Thêm màu sắc </h1>
+    <div class="row">
+      <div class="col-md-12 ">
+        <label>Tên Màu Sắc <span class="vaid">*</span></label> <input class="haninput" ng-model="colorname">
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'colorRequest' && err.field == 'name'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-12 ">
+        <label>Mô Tả </label> <textarea class="haninput1" ng-model="colordescription"></textarea>
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'colorRequest' && err.field == 'description'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+    </div>
+   
+
+ <div style="padding-top: 10px;">
+  <button class="btn btn-primary" ng-click="themMauSac()">X</button>
+  <button class="btn btn-dark" ng-click="addMauSac()">Thêm</button>
+ </div>
+
+   
+  </div>
+</div>
+<div class="popup" ng-class="{ 'show': isSize }">
+  <div class="popup-content2">
+    <!-- Nội dung của popup -->
+    <h1>Thêm kích thước </h1>
+    <div class="row">
+      <div class="col-md-12 ">
+        <label>Tên Kích Thước <span class="vaid">*</span></label> <input class="haninput" ng-model="sizename">
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'sizeRequest' && err.field == 'name'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-12 ">
+        <label>Mô Tả </label> <textarea class="haninput1" ng-model="sizedescription"></textarea>
+        <div ng-repeat="err in validationErrors">
+        <span class="validate" ng-if="err.objectName == 'sizeRequest' && err.field == 'description'">
+           {{err.defaultMessage}}
+        </span>
+        </div>
+      </div>
+    </div>
+   
+
+ <div style="padding-top: 10px;">
+  <button class="btn btn-primary" ng-click="themKichThuoc()">X</button>
+  <button class="btn btn-dark" ng-click="addKichThuoc()">Thêm</button>
+ </div>
+
+   
+  </div>
+</div>
+<div class="popup" ng-class="{ 'show': isChuongTrinh }">
+  <div class="popup-content2">
+    <!-- Nội dung của popup -->
+    <h1>Thêm chương trình</h1>
+    <div class="row">
+      <div class="col-md-12 ">
+        <label>Tên <select class="haninput" id="voucher">
+          <option ng-repeat="v in listVoucher" value="{{v.id}}">
+            {{v.name}} [{{v.code}}]
+          </option>
+        </select>
+       
+      </div>
+   
+    </div>
+   
+
+ <div style="padding-top: 10px;">
+  <button class="btn btn-primary" ng-click="themChuongTrinh()">X</button>
+  <button class="btn btn-dark" ng-click="addChuongTrinh()">Thêm</button>
+ </div>
+
+   
+  </div>
+</div>
+<div class="popup" ng-class="{ 'show': isNhaCungCap }">
+  <div class="popup-content2">
+    <!-- Nội dung của popup -->
+    <h1>Thêm nhà cung cấp</h1>
+    <div class="row">
+      <div class="col-md-12 ">
+        Tên nhà cung cấp
+        <input id="tenncc" class="haninput">
+       
+      </div>
+      <div class="col-md-12 ">
+       Số điện thoại
+          <input id="sdtncc" class="haninput">
+          </div>
+        <div class="col-md-12 ">
+        Địa chỉ
+          <input id="diachincc" class="haninput">
+          </div>
+          <div class="col-md-12 ">
+            Thỏa thuận
+            <textarea id="thoathuanncc" class="haninput1"></textarea>
+            </div>
+   
+    </div>
+   
+
+ <div style="padding-top: 10px;">
+  <button class="btn btn-primary" ng-click="themNhaCungCap()">X</button>
+  <button class="btn btn-dark" ng-click="addNhaCungCap()">Thêm</button>
+ </div>
+
+   
+  </div>
+</div>

@@ -1,0 +1,85 @@
+<div>
+  <h3>Sửa Khách Hàng</h3>
+</div>
+
+<form class="form-control " data-ng-init="detail()">
+
+  <div class="row">
+
+    <div class="col-md-3 add">
+      <div>Ảnh Khách Hàng <span class="vaid">*</span></div>
+      <img id="output" />
+      <input file-model="image" id="fileUpload" type="file" accept="image/*" onchange="loadFile1(event)">
+    </div>
+    <div class="col-md-9">
+
+      <div class="row">
+        <div class="col-md-6 add">
+          <label>Mã Khách Hàng <span class="vaid">*</span></label> <input class="haninput" ng-model="form.code">
+          <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'customerReques' && err.field == 'code'">
+              {{err.defaultMessage}}
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6 add">
+          <label>Tên Khách Hàng <span class="vaid">*</span></label> <input class="haninput" ng-model="form.fullname">
+          <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'customerReques' && err.field == 'fullname'">
+              {{err.defaultMessage}}
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6 add">
+          <label>Tài Khoản<span class="vaid">*</span></label> <input class="haninput" ng-model="form.username">
+          <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'customerReques' && err.field == 'username'">
+              {{err.defaultMessage}}
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6 add">
+          <label>Mật Khẩu<span class="vaid">*</span></label> <input class="haninput" ng-model="form.password">
+          <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'customerReques' && err.field == 'password'">
+              {{err.defaultMessage}}
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6 add">
+          <label>Giới Tính<span class="vaid">*</span></label> <input id="gtNam"  name="gioitinh" type="radio"
+           value="true"  {{form.gender = true ? 'checked' : ''}}> Nam <input id="gtNu" name="gioitinh" type="radio" value="false" {{form.gender = false ? 'checked' : ''}}>Nữ
+          <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'customerReques' && err.field == 'gender'">
+              {{err.defaultMessage}}
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6 add">
+          <label>Số Điện Thoại<span class="vaid">*</span></label> <input class="haninput" ng-model="form.phone">
+          <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'customerReques' && err.field == 'phone'">
+              {{err.defaultMessage}}
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6 add">
+          <label>Email<span class="vaid">*</span></label> <input class="haninput" ng-model="form.email">
+          <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'customerReques' && err.field == 'email'">
+              {{err.defaultMessage}}
+            </span>
+          </div>
+        </div>
+
+        <div style="padding-top: 30px;">
+          <!--                <button style="margin-right: 10px"  class="btn btn-info" ng-click="reset()"><i class="fa-solid fa-rotate-right"></i> Reset</button>-->
+          <button class="btn btn-danger" ng-click="update()"> Sửa</button>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+  </div>
+</form>

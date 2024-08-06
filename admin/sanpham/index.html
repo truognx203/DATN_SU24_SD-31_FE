@@ -1,0 +1,517 @@
+<h3>Quản lý sản phẩm</h3>
+
+<div class="timkiem"><input class="input-group-text" id="name" type="text" placeholder="Tìm theo mã hoặc tên sản phẩm.."><button class="btn btn-dark" ng-click="search()"><i class="fa-solid fa-magnifying-glass"></i></button></div>
+<div>
+	<div style="padding-left: 5px;">
+		<button class="btn btn-dark"><i class="fa-solid fa-filter"></i> Lọc</button>
+	</div>
+	<div class="row">
+
+		<div class="col-md-3 loc"> <label>Danh Mục</label>
+			<select id="danhmuc" class="form-select-sm" ng-click="filter()">
+				<option value="">Tất cả danh mục</option>
+				<option ng-repeat="danhmuc in listCategory" value="{{danhmuc.id}}">
+					{{danhmuc.name}}</option>
+			</select>
+		</div>
+		<div class="col-md-3 loc"><label>Thương Hiệu</label>
+			<select id="thuonghieu" class="form-select-sm" ng-click="filter()">
+				<option value="">Tất cả thương hiệu</option>
+				<option ng-repeat="thuonghieu in listBrand" value="{{thuonghieu.id}}">
+					{{thuonghieu.name}}</option>
+			</select>
+		</div>
+		<div class="col-md-3 loc"><label>Màu Sắc</label>
+			<select id="mausac" class="form-select-sm" ng-click="filter()">
+				<option value="">Tất cả màu sắc</option>
+				<option ng-repeat="mausac in listColor" value="{{mausac.id}}">
+					{{mausac.name}}</option>
+			</select>
+		</div>
+		<div class="col-md-3 loc gia">
+			<label>Khoảng Giá</label>
+			<div class="range-slide">
+				<div class="slide">
+					<div class="line" id="line" style="left: 0%; right: 0%;"></div>
+					<span class="thumb" id="thumbMin" style="left: 0%;"></span>
+					<span class="thumb" id="thumbMax" style="left: 100%;"></span>
+				</div>
+				<input id="rangeMin" ng-click="filter()" type="range" max="9999999" min="0" step="1" value="0">
+				<input id="rangeMax" ng-click="filter()" type="range" max="9999999" min="0" step="1" value="9999999">
+			</div>
+			<div class="display">
+				Từ
+				<span id="min">0 đ</span>
+				đến
+				<span id="max">9,999,999 đ</span>
+			</div>
+		</div>
+		<div class="col-md-3 loc"><label>Chất Liệu</label>
+			<select id="chatlieu" class="form-select-sm" ng-click="filter()">
+				<option value="">Tất cả chất liệu</option>
+				<option ng-repeat="chatlieu in listMaterial" value="{{chatlieu.id}}">
+					{{chatlieu.name}}</option>
+			</select>
+		</div>
+		<div class="col-md-3 loc"><label>Kích Thước</label>
+			<select id="kichthuoc" class="form-select-sm" ng-click="filter()">
+				<option value="">Tất cả kích thước</option>
+				<option ng-repeat="kichthuoc in listSize" value="{{kichthuoc.id}}">
+					Size {{kichthuoc.name}}</option>
+			</select>
+		</div>
+
+
+		<div class="col-md-3 loc"><label>Số lượng</label>
+			<select id="soLuong" class="form-select-sm" style="width: 100px;" ng-click="filter()">
+				<option value="">Tất cả</option>
+				<option value="10">Sắp hết</option>
+				<option value="1">Đã hết</option>
+			</select>
+		</div>
+	</div>
+
+
+</div>
+<div style="float: left;padding-top: 5px;">
+	<button ng-click="openLichSuThaoTac()" class="btn btn-dark"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử thao tác</button>
+</div>
+<!--        <button class="btn btn-outline-dark" ng-click="loadAll()"> <i class="fa-solid fa-rotate-right"></i></button>-->
+<div style="float: right">
+	<a href="#/products/add"><button class="btn btn-success"><i class="fa-solid fa-plus"></i> Thêm</button></a>
+	<button class="btn btn-info" ng-click="exportToExcel()"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
+			<g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none"
+				text-anchor="none" style="mix-blend-mode: normal">
+				<g transform="scale(5.12,5.12)">
+					<path
+						d="M28.875,0c-0.01953,0.00781 -0.04297,0.01953 -0.0625,0.03125l-28,5.3125c-0.47656,0.08984 -0.82031,0.51172 -0.8125,1v37.3125c-0.00781,0.48828 0.33594,0.91016 0.8125,1l28,5.3125c0.28906,0.05469 0.58984,-0.01953 0.82031,-0.20703c0.22656,-0.1875 0.36328,-0.46484 0.36719,-0.76172v-5h17c1.09375,0 2,-0.90625 2,-2v-34c0,-1.09375 -0.90625,-2 -2,-2h-17v-5c0.00391,-0.28906 -0.12109,-0.5625 -0.33594,-0.75391c-0.21484,-0.19141 -0.50391,-0.28125 -0.78906,-0.24609zM28,2.1875v4.34375c-0.13281,0.27734 -0.13281,0.59766 0,0.875v35.40625c-0.02734,0.13281 -0.02734,0.27344 0,0.40625v4.59375l-26,-4.96875v-35.6875zM30,8h17v34h-17v-5h4v-2h-4v-6h4v-2h-4v-5h4v-2h-4v-5h4v-2h-4zM36,13v2h8v-2zM6.6875,15.6875l5.46875,9.34375l-5.96875,9.34375h5l3.25,-6.03125c0.22656,-0.58203 0.375,-1.02734 0.4375,-1.3125h0.03125c0.12891,0.60938 0.25391,1.02344 0.375,1.25l3.25,6.09375h4.96875l-5.75,-9.4375l5.59375,-9.25h-4.6875l-2.96875,5.53125c-0.28516,0.72266 -0.48828,1.29297 -0.59375,1.65625h-0.03125c-0.16406,-0.60937 -0.35156,-1.15234 -0.5625,-1.59375l-2.6875,-5.59375zM36,20v2h8v-2zM36,27v2h8v-2zM36,35v2h8v-2z">
+					</path>
+				</g>
+			</g>
+		</svg> Xuất Exel</button>
+</div>
+<div class="container mt-5">
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs" id="myTabs">
+		<li class="nav-item">
+			<a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home">Sản phẩm đang bán</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile">Sản phẩm ngưng bán</a>
+		</li>
+	</ul>
+	
+	<!-- Tab panes -->
+	<div class="tab-content mt-2">
+		<div class="tab-pane fade show active" id="home">
+			<table id="tblProduct" class="table">
+				<thead>
+					<tr>
+						<td scope="col">
+							<h6>#</h6>
+						</td>
+						<td scope="col">
+							<h6>Ảnh Sản Phẩm</h6>
+						</td>
+						<td scope="col">
+							<h6>Mã Sản Phẩm</h6>
+						</td>
+						<td scope="col">
+							<h6>Tên Sản Phẩm</h6>
+						</td>
+						<td scope="col">
+							<h6>Giá Bán</h6>
+						</td>
+						<td scope="col">
+							<h6>Trọng Lượng</h6>
+						</td>
+						<!-- <td scope="col">Danh Mục</td>
+						<td scope="col">Thương Hiệu</td>
+						<td scope="col">Mũi Giày</td>
+						<td scope="col">Đế Giày</td>
+						<td scope="col">Thiết Kế</td>
+						<td scope="col">Dây Giày</td>
+						<td scope="col">Lót Giày</td> -->
+						<td scope="col">
+							<h6>Hành Động</h6>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-if="list.length > 0  && sp.status == 0" ng-repeat="sp in pager.items">
+						<td> {{$index + 1}}</td>
+						<td>
+							<span ng-repeat="img in sp.product.productImages">
+								<span ng-if="img.mainImage == true">
+									<img style="width: 100px;height: 100px" src="{{img.url}}">
+								</span>
+							</span>
+							<div>
+								<span class="blinking-text" data-ng-init="getQuantity(sp)"><span ng-if="sp.quantityWarningText != null"><i class="fa-solid fa-triangle-exclamation"></i></span>
+									<span ng-bind="sp.quantityWarningText"></span>
+								</span>
+							</div>
+						</td>
+						<td>{{sp.product.code}}</td>
+						<td>{{sp.product.name}}</td>
+						<td>{{sp.price | currency:'':0}} VNĐ</td>
+						<td>{{sp.weight}} (g)</td>
+						<!-- <td>{{sp.category.name}}</td>
+						<td>{{sp.brand.name}}</td>
+						<td>{{sp.toe.name}}</td>
+						<td>{{sp.sole.name}}</td>
+						<td>{{sp.design.name}}</td>
+						<td>{{sp.shoelace.name}}</td>
+						<td>{{sp.heelcushion.name}}</td> -->
+						<td>
+							<div>
+								<div> <button style="margin-bottom : 5px" class="btn btn-info buttonbtn" ng-click="openChiTiet(sp.id)"><i class="fa-solid fa-circle-info"></i> Chi tiết</button></div>
+								<div><a href="#/products/update/{{sp.id}}"><button class="btn btn-indigo buttonbtn"><i class="fa-solid fa-pen-to-square"></i> Sửa</button></a></div>
+								<button style="margin-top: 5px" class="btn btn-danger buttonbtn" ng-click="delete(sp.id)"><i class="fa-solid fa-trash-can"></i> Xóa</button>
+							</div>
+						</td>
+					</tr>
+					<tr ng-if="list.length == 0">
+						<td colspan="13">
+							<div style="text-align: center;">
+								<div><img style="width: 80px; height: 80px;" src="../../assets/images/box.png"></div>
+								<h4>Không có sản phẩm nào</h4>
+							</div>
+						</td>
+					</tr>
+			
+			
+			</table>
+		</div>
+		<div class="tab-pane fade" id="profile">
+			<table id="tblProduct" class="table">
+				<thead>
+					<tr>
+						<td scope="col">
+							<h6>#</h6>
+						</td>
+						<td scope="col">
+							<h6>Ảnh Sản Phẩm</h6>
+						</td>
+						<td scope="col">
+							<h6>Mã Sản Phẩm</h6>
+						</td>
+						<td scope="col">
+							<h6>Tên Sản Phẩm</h6>
+						</td>
+						<td scope="col">
+							<h6>Giá Bán</h6>
+						</td>
+						<td scope="col">
+							<h6>Trọng Lượng</h6>
+						</td>
+						<!-- <td scope="col">Danh Mục</td>
+						<td scope="col">Thương Hiệu</td>
+						<td scope="col">Mũi Giày</td>
+						<td scope="col">Đế Giày</td>
+						<td scope="col">Thiết Kế</td>
+						<td scope="col">Dây Giày</td>
+						<td scope="col">Lót Giày</td> -->
+						<td scope="col">
+							<h6>Hành Động</h6>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-if="list.length > 0 && sp.status == 1" ng-repeat="sp in pager.items">
+						<td> {{$index + 1}}</td>
+						<td>
+							<span ng-repeat="img in sp.product.productImages">
+								<span ng-if="img.mainImage == true">
+									<img style="width: 100px;height: 100px" src="{{img.url}}">
+								</span>
+							</span>
+							<div>
+								<span class="blinking-text" data-ng-init="getQuantity(sp)"><span ng-if="sp.quantityWarningText != null"><i class="fa-solid fa-triangle-exclamation"></i></span>
+									<span ng-bind="sp.quantityWarningText"></span>
+								</span>
+							</div>
+						</td>
+						<td>{{sp.product.code}}</td>
+						<td>{{sp.product.name}}</td>
+						<td>{{sp.price | currency:'':0}} VNĐ</td>
+						<td>{{sp.weight}} (g)</td>
+						<!-- <td>{{sp.category.name}}</td>
+						<td>{{sp.brand.name}}</td>
+						<td>{{sp.toe.name}}</td>
+						<td>{{sp.sole.name}}</td>
+						<td>{{sp.design.name}}</td>
+						<td>{{sp.shoelace.name}}</td>
+						<td>{{sp.heelcushion.name}}</td> -->
+						<td>
+							<div>
+								<div><a href="#/products/update/{{sp.id}}"><button class="btn btn-indigo buttonbtn"><i class="fa-solid fa-pen-to-square"></i> Sửa</button></a></div>
+							</div>
+						</td>
+					</tr>
+					<tr ng-if="list.length == 0">
+						<td colspan="13">
+							<div style="text-align: center;">
+								<div><img style="width: 80px; height: 80px;" src="../../assets/images/box.png"></div>
+								<h4>Không có sản phẩm nào</h4>
+							</div>
+						</td>
+					</tr>
+			
+			
+			</table>
+		</div>
+
+	</div>
+</div>
+
+
+<div class="text-center" ng-if="list.length > 0">
+	<div class="btn-group" role="group" aria-label="Basic outlined example">
+		<button ng-click="pager.first()" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-angles-left"></i></button>
+		<button ng-click="pager.prev()" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-angle-left"></i></button>
+		<button type="button" class="btn btn-outline-secondary">{{pager.page+1}}
+			of
+			{{pager.count}}</button>
+		<button ng-click="pager.next()" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-angle-right"></i></button>
+		<button ng-click="pager.last()" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-angles-right"></i></button>
+	</div>
+</div>
+<!--        <paging-control paging-size="pagingSize" noofitem="dataPerPage" total-items="totalItems" display-items="displayItems"></paging-control>-->
+</div>
+
+<div class="popup" ng-class="{ 'show': isChiTietSanPham }">
+	<div class="popup-content3">
+		<!-- Nội dung của popup -->
+		<h1>Chi tiết sản phẩm </h1>
+
+		<div id="qrcode">
+
+		</div>
+
+
+		<div class="row">
+
+			<div class="col-md-3 add">
+				<div>Ảnh đại diện sản phẩm </div>
+				<span ng-repeat="img in form.product.productImages">
+					<span ng-if="img.mainImage === true">
+						<img id="output1" src="{{img.url}}" />
+					</span>
+				</span>
+				<img id="output" style="display: none;" />
+				<div style="margin-top: 10px">Danh sách ảnh sản phẩm</div>
+
+				<span ng-repeat="img in form.product.productImages">
+					<span ng-if="img.mainImage === false">
+						<img style="padding-top: 5px;" id="output1" src="{{img.url}}" />
+					</span>
+				</span>
+			</div>
+			<div class="col-md-9">
+
+				<div class="row">
+					<div class="col-md-6 add">
+						<label>Mã Sản Phẩm</label> <input class="haninput" ng-model="form.product.code" readonly disabled>
+					</div>
+					<div class="col-md-6 add">
+						<label>Tên Sản Phẩm </label> <input class="haninput" ng-model="form.product.name" readonly>
+						<div ng-repeat="err in validationErrors">
+							<span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Name'">
+								{{err.defaultMessage}}
+							</span>
+						</div>
+					</div>
+					<div class="col-md-6 add">
+						<label>Giá Bán </label> <input class="haninput" ng-model="form.price" readonly>
+						<div ng-repeat="err in validationErrors">
+							<span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Price'">
+								{{err.defaultMessage}}
+							</span>
+						</div>
+					</div>
+					<div class="col-md-6 add">
+						<label> Trọng lượng (g)</label> <input class="haninput" ng-model="form.weight" readonly>
+						<div ng-repeat="err in validationErrors">
+							<span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Weight'">
+								{{err.defaultMessage}}
+							</span>
+						</div>
+					</div>
+					<div class="col-md-6 add" style="display: none;">
+						<label>Giảm Giá </label> <input ng-model="form.discount">
+						<div ng-repeat="err in validationErrors">
+							<span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Discount'">
+								{{err.defaultMessage}}
+							</span>
+						</div>
+					</div>
+					<div class="col-md-6 add">
+						<label>Mô Tả</label> <textarea class="haninput1" ng-model="form.description" readonly></textarea>
+					</div>
+					<div class="col-md-6 add">
+						<label>Danh Mục </label>
+						<span ng-repeat="dm in listCategory">
+							<span ng-if="dm.id == form.category.id">
+								<input class="haninput" value="{{dm.name}}" readonly>
+							</span>
+						</span>
+					</div>
+					<div class="col-md-6 add">
+						<label>Đế Giầy </label>
+						<span ng-repeat="dg in listDeGiay">
+							<span ng-if="dg.id == form.soletype.id">
+								<input class="haninput" value="{{dg.name}}" readonly>
+							</span>
+						</span>
+
+					</div>
+					<div class="col-md-6 add">
+						<label>Thương Hiệu </label>
+
+						<span ng-repeat="th in listBrand">
+							<span ng-if="th.id == form.brand.id">
+								<input class="haninput" value="{{th.name}}" readonly>
+							</span></span>
+					</div>
+					<div class="col-md-12 add">
+						<label>Chất Liệu </label>
+						<div>
+							<span style="padding-left: 5px" ng-repeat="chatlieu in form.productDetail_materials">{{chatlieu.material.name}}</span>
+						</div>
+					</div>
+					<div class="col-md-12 add" ng-if="form.discount > 0">
+						<h5>Giảm giá</h5>
+						<p>Giảm giá {{form.discount}} %</p>
+						<p>Ngày kết thúc : {{form.discountDate == null ? 'Không giới hạn' : form.discountDate | date:'dd-MM-yyyy' }}</p>
+					</div>
+					<!-- <div class="col-md-12 add" ng-if="form.suppliers.length > 0">
+                    <h5>Nhà cung cấp</h5>
+                    <div ng-repeat="ncc in form.suppliers">
+                      <div>Tên NCC : {{ncc.name}}</div>
+                      <div>SĐT : {{ncc.phone}}</div>
+                      <div>Địa chỉ : {{ncc.address}}</div>
+                      <div>Thỏa thuận : {{ncc.agree}}</div>
+                    </div>
+                    </div> -->
+					<div class="col-md-12 add">
+						<h5>Chương trình khuyến mãi</h5>
+						<p ng-repeat="km in form.product.product_vouchers">
+							{{km.voucher.name}} [{{km.voucher.code}}]
+						</p>
+					</div>
+					<div class="col-md-12 add">
+						<h5>Báo cáo số lượng</h5>
+						<table class="table">
+							<tr>
+								<td>Màu</td>
+								<td>Kích thước</td>
+								<td>Số lượng còn</td>
+							</tr>
+							<tr ng-repeat="c in form.productDetail_size_colors">
+								<td>{{c.color.name}}</td>
+								<td>{{c.size.name}}</td>
+								<td>{{c.quantity}}</td>
+							</tr>
+						</table>
+						<div>
+							<h5 style="color: red;font-weight: bold;">Tổng số lượng đã bán : {{quantitySold}}</h5>
+						</div>
+						<div>
+							<h5 style="color: red;font-weight: bold;">Tổng doanh thu : {{totalSold| currency:'':0}} VNĐ</h5>
+						</div>
+						<div ng-if="quantitySold > 0">
+							<h5>Bảng số lượng đã bán chi tiết</h5>
+							<table class="table">
+								<tr>
+									<td>Màu</td>
+									<td>Kích thước</td>
+									<td>Số lượng đã bán</td>
+									<td>Doanh thu</td>
+								</tr>
+								<tr ng-repeat="c in pagerSold.items">
+									<td>
+										<span ng-repeat="color in listColor">
+											<span ng-if="color.id == c.idColor">{{color.name}}</span>
+										</span>
+									</td>
+									<td>
+										<span ng-repeat="size in listSize">
+											<span ng-if="size.id == c.idSize">{{size.name}}</span>
+										</span>
+									</td>
+									<td>{{c.quantity}}</td>
+									<td>{{c.price | currency:'':0}} VNĐ</td>
+								</tr>
+
+
+
+							</table>
+							<div class="text-center" ng-if="listProductSold.length > 0">
+								<div class="btn-group" role="group" aria-label="Basic outlined example">
+									<button ng-click="pagerSold.first()" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-angles-left"></i></button>
+									<button ng-click="pagerSold.prev()" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-angle-left"></i></button>
+									<button type="button" class="btn btn-outline-secondary">{{pagerSold.page+1}}
+										of
+										{{pagerSold.count}}</button>
+									<button ng-click="pagerSold.next()" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-angle-right"></i></button>
+									<button ng-click="pagerSold.last()" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-angles-right"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div style="padding-top: 10px;">
+				<button class="btn btn-primary" ng-click="closeChiTiet()">X</button>
+			</div>
+
+
+		</div>
+	</div>
+</div>
+
+<div class="popup" ng-class="{ 'show': isLichSuThaoTac }">
+	<div class="popup-content4">
+		<h2><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử thao tác </h2>
+		<table class="table">
+			<tr>
+				<td>Thời gian</td>
+				<td>Nội dung</td>
+				<td>Nhân viên</td>
+
+			</tr>
+			<tr ng-repeat="op in pagerop.items">
+				<td>{{op.createDate | date:'HH:mm:ss dd/MM/yyyy' }}</td>
+				<td>{{op.status == 1 ? 'Đã thêm' : op.status == 2 ? 'Đã sửa' : op.status == 3 ? 'Đã xóa' : ''}} sản phẩm
+					<span ng-repeat="p in list1">
+						<span ng-if="p.id == op.idProductDetail">
+							[{{p.product.code}}] - {{p.product.name}}
+						</span>
+					</span>
+
+				</td>
+				<td>{{op.createBy}}</td>
+			</tr>
+		</table>
+		<div class="text-center" ng-if="operationhistory.length > 0">
+			<div class="btn-group" role="group" aria-label="Basic outlined example">
+				<button ng-click="pagerop.first()" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-angles-left"></i></button>
+				<button ng-click="pagerop.prev()" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-angle-left"></i></button>
+				<button type="button" class="btn btn-outline-secondary">{{pagerop.page+1}}
+					of
+					{{pagerop.count}}</button>
+				<button ng-click="pagerop.next()" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-angle-right"></i></button>
+				<button ng-click="pagerop.last()" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-angles-right"></i></button>
+			</div>
+		</div>
+		<div style="padding-top: 10px;">
+			<button class="btn btn-primary" ng-click="openLichSuThaoTac()">X</button>
+		</div>
+
+
+	</div>
+</div>
+</div>

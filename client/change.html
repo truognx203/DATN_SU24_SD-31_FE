@@ -1,0 +1,65 @@
+ <!--Body Content-->
+ <div id="page-content" style="margin-top: 100px;">
+    <!--Page Title-->
+    <div class="page section-header text-center">
+        <div class="page-title">
+            <div class="wrapper"><h1 class="page-width">Đổi Mật Khẩu</h1></div>
+          </div>
+    </div>
+    <!--End Page Title-->
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
+                <div class="mb-4">
+                      <div class="row">
+                          <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="FirstName">Mật khẩu cũ</label>
+                                <input type="password" ng-model="passcu" type="text" name="customer[first_name]" placeholder="" id="FirstName" autofocus="">
+                                <div ng-repeat="err in validationErrors">
+                                    <span class="validate" ng-if="err.objectName == 'changeForm' && err.field == 'PasswordCu'">
+                                       {{err.defaultMessage}}
+                                    </span>
+                                    </div>   
+                            </div>
+                           </div>
+                        
+                           <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="FirstName">Mật khẩu mới</label>
+                                <input type="password" ng-model="passmoi" type="text" name="customer[first_name]" placeholder="" id="FirstName" autofocus="">
+                                <div ng-repeat="err in validationErrors">
+                                    <span class="validate" ng-if="err.objectName == 'changeForm' && err.field == 'PasswordMoi'">
+                                       {{err.defaultMessage}}
+                                    </span>
+                                    </div>   
+                            </div>
+                           </div>
+                           <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="FirstName">Nhập lại mật khẩu mới</label>
+                                <input type="password" ng-model="repassmoi" type="text" name="customer[first_name]" placeholder="" id="FirstName" autofocus="">
+                                <div ng-repeat="err in validationErrors">
+                                    <span class="validate" ng-if="err.objectName == 'changeForm' && err.field == 'RePasswordMoi'">
+                                       {{err.defaultMessage}}
+                                    </span>
+                                    </div>   
+                            </div>
+                           </div>
+                    
+                      </div>
+                      <div class="row">
+                        <div class="text-center col-12 col-sm-12 col-md-12 col-lg-12">
+                            <button ng-click="change()" class="btn btn-dark">Đổi Mật Khẩu</button>
+                          
+                        </div>
+                     </div>
+               
+                </div>
+               </div>
+        </div>
+    </div>
+    
+</div>
+<!--End Body Content-->

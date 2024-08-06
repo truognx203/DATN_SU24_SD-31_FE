@@ -1,0 +1,143 @@
+<h3><i class="fa-solid fa-receipt"></i> Quản Lý Hóa Đơn</h3>
+<div class="radio-button-group">
+  <input type="radio" id="radioButton1" name="radioGroup" checked ng-click="loc(null)">
+  <label for="radioButton1">Tất cả ({{tatca}})</label>
+  <input type="radio" id="radioButton2" name="radioGroup" ng-click="loc(0)">
+  <label for="radioButton2">Chờ xác nhận ({{choxacnhan}})</label>
+
+  <input type="radio" id="radioButton3" name="radioGroup" ng-click="loc(1)">
+  <label for="radioButton3">Chờ giao hàng ({{chogiaohang}})</label>
+  <input type="radio" id="radioButton4" name="radioGroup" ng-click="loc(2)">
+  <label for="radioButton4">Đang giao hàng ({{danggiaohang}})</label>
+  <input type="radio" id="radioButton5" name="radioGroup" ng-click="loc(3)">
+  <label for="radioButton5">Đã giao hàng ({{dagiaohang}})</label>
+  <input type="radio" id="radioButton6" name="radioGroup" ng-click="loc(4)">
+  <label for="radioButton6">Đã hủy ({{dahuy}})</label>
+  <input type="radio" id="radioButton7" name="radioGroup" ng-click="loc(5)">
+  <label for="radioButton7">Đổi trả ({{doitra}})</label>
+</div>
+<!-- <div class="timkiem"><input class="input-group-text" id="name" type="text" placeholder="Tìm theo mã.."><button class="btn btn-dark" ng-click="search()"><i class="fa-solid fa-magnifying-glass"></i></button></div> -->
+<div class="row">
+ <div class="col-md-5">
+  <label>Hình thức thanh toán</label>
+  <select class="haninput" id="httt" ng-click="filter()">
+    <option value="">Tất cả</option>
+    <option value="0" >Thanh toán khi nhận hàng</option>
+    <option value="1">Thanh toán online qua VNPay</option>
+  </select>
+ </div>
+ <div class="col-md-5">
+  <label>Trạng thái thanh toán</label>
+  <select class="haninput" id="tttt" ng-click="filter()">
+    <option value="">Tất cả</option>
+    <option value="1">Đã thanh toán</option>
+    <option value="0">Chưa thanh toán</option>
+  </select>
+ </div>
+ <div class="col-md-2"></div>
+ <div class="col-md-5">
+  <label>Trạng thái đơn hàng</label>
+  <select class="haninput" id="ttdh" ng-click="filter()">
+    <option value="">Tất cả</option>
+    <option value="0">Chờ xác nhận</option>
+    <option value="1">Chờ giao hàng</option>
+    <option value="2">Đang giao hàng</option>
+    <option value="3">Đã giao hàng</option>
+    <option value="4">Đã hủy</option>
+    <option value="5">Đổi hàng</option>
+  </select>
+ </div>
+ <div class="col-md-5">
+  <label>Hình thức mua hàng</label>
+  <select class="haninput" id="htmh" ng-click="filter()">
+    <option value="">Tất cả</option>
+    <option value="0">Mua online</option>
+    <option value="1">Mua tại quầy</option>
+  </select>
+ </div>
+ <div class="col-md-2"></div>
+ <div class="col-md-5">
+  <label>Từ ngày</label>
+  <input ng-model="selectedDate" type="date" class="haninput" id="tungay">
+ </div>
+ <div class="col-md-5">
+  <label>Đến ngày</label>
+  <input ng-model="selectedDate" type="date" class="haninput" id="denngay">
+ </div>
+</div>
+<!--        <button class="btn btn-outline-dark" ng-click="loadAll()"> <i class="fa-solid fa-rotate-right"></i></button>-->
+<div style="float: right">
+  <button class="btn btn-info" ng-click="exportToExcel()"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
+    <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M28.875,0c-0.01953,0.00781 -0.04297,0.01953 -0.0625,0.03125l-28,5.3125c-0.47656,0.08984 -0.82031,0.51172 -0.8125,1v37.3125c-0.00781,0.48828 0.33594,0.91016 0.8125,1l28,5.3125c0.28906,0.05469 0.58984,-0.01953 0.82031,-0.20703c0.22656,-0.1875 0.36328,-0.46484 0.36719,-0.76172v-5h17c1.09375,0 2,-0.90625 2,-2v-34c0,-1.09375 -0.90625,-2 -2,-2h-17v-5c0.00391,-0.28906 -0.12109,-0.5625 -0.33594,-0.75391c-0.21484,-0.19141 -0.50391,-0.28125 -0.78906,-0.24609zM28,2.1875v4.34375c-0.13281,0.27734 -0.13281,0.59766 0,0.875v35.40625c-0.02734,0.13281 -0.02734,0.27344 0,0.40625v4.59375l-26,-4.96875v-35.6875zM30,8h17v34h-17v-5h4v-2h-4v-6h4v-2h-4v-5h4v-2h-4v-5h4v-2h-4zM36,13v2h8v-2zM6.6875,15.6875l5.46875,9.34375l-5.96875,9.34375h5l3.25,-6.03125c0.22656,-0.58203 0.375,-1.02734 0.4375,-1.3125h0.03125c0.12891,0.60938 0.25391,1.02344 0.375,1.25l3.25,6.09375h4.96875l-5.75,-9.4375l5.59375,-9.25h-4.6875l-2.96875,5.53125c-0.28516,0.72266 -0.48828,1.29297 -0.59375,1.65625h-0.03125c-0.16406,-0.60937 -0.35156,-1.15234 -0.5625,-1.59375l-2.6875,-5.59375zM36,20v2h8v-2zM36,27v2h8v-2zM36,35v2h8v-2z"></path></g></g>
+  </svg> Xuất Exel</button></div>
+<table id="tblProduct" class="table">
+  <thead>
+  <tr>
+    <td >#</td>
+    <td style="text-align: center" >Hóa Đơn</td>
+    <td >Ngày Mua</td>
+    <td >Tổng Tiền</td>
+    <td>Hình Thức Thanh Toán</td>
+    <td >T.T Thanh Toán</td>
+    <td >T.T Đơn Hàng</td>
+    <td >Hình Thức Mua Hàng</td>
+  </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="bill in pager.items" ng-click="redirect(bill.code)" ng-if="list.length > 0">
+      
+            <td> {{$index + 1}}</td>
+            <td>{{bill.code}}</td>
+            <td>{{bill.purchaseDate | date:'dd-MM-yyyy'}}</td>
+            <td>{{bill.totalPrice + bill.shipPrice - bill.totalPriceLast | currency:'':0}} VNĐ</td>
+            <td><span class="button-bill" ng-if="bill.payType == 0">Thanh toán khi nhận hàng</span>
+              <span class="button-bill" ng-if="bill.payType == 1">Thanh toán online qua VNPAY</span></td>
+            <td>
+              <span class="button-bill" ng-if="bill.payStatus == 1">Đã thanh toán</span>
+              <span class="button-bill2" ng-if="bill.payStatus == 0">Chưa thanh toán</span>
+            </td>
+            <td>
+              <span class="button-bill3" ng-if="bill.status == 0">Chờ xác nhận</span>
+              <span class="button-bill5" ng-if="bill.status == 1">Chờ giao hàng</span>
+              <span class="button-bill4" ng-if="bill.status == 2">Đang giao hàng</span>
+              <span class="button-bill" ng-if="bill.status == 3">Đã giao hàng</span>
+              <span class="button-bill2" ng-if="bill.status == 4">Đã hủy</span>
+              <span class="button-bill6" ng-if="bill.status == 5">Đổi hàng</span>
+            </td>
+            <td>
+              <span class="button-bill" ng-if="bill.typeStatus == 1">Tại quầy</span>
+              <span class="button-bill" ng-if="bill.typeStatus != 1">Mua online</span>
+             
+            </td>
+           
+        
+   
+  </tr>
+  <tr ng-if="list.length == 0">
+    <td colspan="13">
+      <div style="text-align: center;">
+        <div><img style="width: 80px; height: 80px;" src="../../assets/images/empty-folder.png"></div>
+        <h4>Không có dữ liệu</h4>
+      </div>
+    </td>
+  </tr>
+
+
+</table>
+<div class="text-center" ng-if="list.length > 0">
+  <div class="btn-group" role="group" aria-label="Basic outlined example">
+    <button ng-click="pager.first()" type="button"
+            class="btn btn-outline-secondary"><i class="fa-solid fa-angles-left"></i></button>
+    <button ng-click="pager.prev()" type="button"
+            class="btn btn-outline-secondary"><i class="fa-solid fa-angle-left"></i></button>
+    <button type="button" class="btn btn-outline-secondary">{{pager.page+1}}
+      of
+      {{pager.count}}</button>
+    <button ng-click="pager.next()" type="button"
+            class="btn btn-outline-secondary"><i class="fa-solid fa-angle-right"></i></button>
+    <button ng-click="pager.last()" type="button"
+            class="btn btn-outline-secondary"><i class="fa-solid fa-angles-right"></i></button>
+  </div>
+</div>
+<!--        <paging-control paging-size="pagingSize" noofitem="dataPerPage" total-items="totalItems" display-items="displayItems"></paging-control>-->
+</div>

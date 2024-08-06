@@ -1,0 +1,107 @@
+
+<div> <h3>Sửa Nhân Viên</h3></div>
+
+<form class="form-control" data-ng-init="detail()">
+  <div class="row">
+
+    <div class="col-md-3 add">
+      <label>Ảnh </label>
+        <img id="output"/>
+      <input file-model="image" id="fileUpload" type="file" accept="image/*" onchange="loadFile1(event)" ng-model="form.image">
+      <!-- <input type="file" style="width: 200px;" > -->
+      <div ng-repeat="err in validationErrors">
+      <span class="validate" ng-if="err.objectName == ' ' && err.field == 'image'">
+         {{err.defaultMessage}}
+      </span>
+      </div>
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-6" style="margin-top: 30px;">
+            <label>Mã Nhân Viên <span class="vaid">*</span></label> <input class="haninput" ng-model="form.code">
+            <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'employeeRequest' && err.field == 'Code'">
+               {{err.defaultMessage}}
+            </span>
+            </div>
+          </div>
+          <div class="col-md-6" style="margin-top: 30px;">
+            <label>Họ Tên </label> <input class="haninput" ng-model="form.fullname">
+            <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'employeeRequest' && err.field == 'Fullname'">
+               {{err.defaultMessage}}
+            </span>
+            </div>
+          </div>
+          <div class="col-md-6 " style="margin-top: 10px;">
+            <label>Tài Khoản </label> <input class="haninput" ng-model="form.username">
+            <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'employeeRequest' && err.field == 'Username'">
+               {{err.defaultMessage}}
+            </span>
+            </div>
+          </div>
+          <div class="col-md-6 " style="margin-top: 10px;">
+            <label>Mật Khẩu </label> <input class="haninput" ng-model="form.password">
+            <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'employeeRequest' && err.field == 'Password'">
+               {{err.defaultMessage}}
+            </span>
+            </div>
+          </div>
+          <div class="col-md-6 "style="margin-top: 10px;">
+            <label>Giới Tính<span class="vaid">*</span></label>
+                <input id="gtNam"  name="gioitinh" type="radio" value="true" checked> Nam 
+                <input id="gtNu" name="gioitinh" type="radio" value="false">Nữ
+            <div ng-repeat="err in validationErrors">
+              <span class="validate" ng-if="err.objectName == 'employeeRequest' && err.field == 'Gender'">
+                {{err.defaultMessage}}
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6 "style="margin-top: 10px;">
+            <label>Số Điện Thoại </label> <input class="haninput" ng-model="form.phone">
+            <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'employeeRequest' && err.field == 'Phone'">
+               {{err.defaultMessage}}
+            </span>
+            </div>
+          </div>
+          <div class="col-md-6 "style="margin-top: 10px;">
+            <label>Email </label> <input class="haninput" ng-model="form.email">
+            <div ng-repeat="err in validationErrors">
+            <span class="validate" ng-if="err.objectName == 'employeeRequest' && err.field == 'Email'">
+               {{err.defaultMessage}}
+            </span>
+            </div>
+          </div>
+          <div class="col-md-6" style="margin-top: 30px;">
+            <label>Vai Trò <span class="vaid">*</span></label>
+            <select id="vaitro" class="haninput">
+              <option value="1" id="qly">Quản Lý</option>
+              <option value="2" id="nv">Nhân Viên</option>
+            </select>
+          </div>
+          <div class="col-md-6" style="margin-top: 10px;">
+            <label>Trạng Thái <span class="vaid">*</span></label>
+            <select id="trangthai" class="haninput">
+              <option value="0" id="lam">Còn Làm Việc</option>
+              <option value="1" id="nghi">Đã Nghỉ Việc</option>
+            </select>
+          </div>
+        </div>
+    </div>
+
+  </div>
+ 
+  </div>
+ 
+
+      <div style="padding-top: 30px;">
+<!--                <button style="margin-right: 10px"  class="btn btn-info" ng-click="reset()"><i class="fa-solid fa-rotate-right"></i> Reset</button>-->
+        <button  class="btn btn-danger" ng-click="update()"> Sửa</button></div>
+
+    </div>
+  </div>
+  </div>
+</form>
