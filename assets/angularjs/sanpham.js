@@ -1822,6 +1822,9 @@ window.SanPhamController = function ($scope, $http, $location, $routeParams, $ro
         }).catch(function (err) {
             if (err.status === 400) {
                 $scope.validationErrors = err.data;
+                Swal.fire('Lỗi!', 'Tên không đúng định dạng', 'error');
+            }else if (err.status === 409) {
+                Swal.fire('Lỗi!', 'Danh mucj đã tồn tại', 'error');
             }
 
         })
@@ -1846,6 +1849,9 @@ window.SanPhamController = function ($scope, $http, $location, $routeParams, $ro
         }).catch(function (err) {
             if (err.status === 400) {
                 $scope.validationErrors = err.data;
+                Swal.fire('Lỗi!', 'Tên không đúng định dạng', 'error');
+            }else if (err.status === 409) {
+                Swal.fire('Lỗi!', 'Đế giày đã tồn tại', 'error');
             }
 
         })
@@ -1870,6 +1876,9 @@ window.SanPhamController = function ($scope, $http, $location, $routeParams, $ro
         }).catch(function (err) {
             if (err.status === 400) {
                 $scope.validationErrors = err.data;
+                Swal.fire('Lỗi!', 'Tên không đúng định dạng', 'error');
+            }else if (err.status === 409) {
+                Swal.fire('Lỗi!', 'Thương hiệu đã tồn tại', 'error');
             }
 
         })
@@ -1894,6 +1903,9 @@ window.SanPhamController = function ($scope, $http, $location, $routeParams, $ro
         }).catch(function (err) {
             if (err.status === 400) {
                 $scope.validationErrors = err.data;
+                Swal.fire('Lỗi!', 'Tên không đúng định dạng', 'error');
+            }else if (err.status === 409) {
+                Swal.fire('Lỗi!', 'Chất liệu đã tồn tại', 'error');
             }
 
         })
@@ -1928,6 +1940,9 @@ window.SanPhamController = function ($scope, $http, $location, $routeParams, $ro
         }).catch(function (err) {
             if (err.status === 400) {
                 $scope.validationErrors = err.data;
+                Swal.fire('Lỗi!', 'Tên không đúng định dạng', 'error');
+            }else if (err.status === 409) {
+                Swal.fire('Lỗi!', 'Chất liệu đã tồn tại', 'error');
             }
 
         })
@@ -1953,6 +1968,9 @@ window.SanPhamController = function ($scope, $http, $location, $routeParams, $ro
         }).catch(function (err) {
             if (err.status === 400) {
                 $scope.validationErrors = err.data;
+                Swal.fire('Lỗi!', 'Tên không đúng định dạng', 'error');
+            }else if (err.status === 409) {
+                Swal.fire('Lỗi!', 'Màu sắc đã tồn tại', 'error');
             }
 
         })
@@ -1993,6 +2011,9 @@ window.SanPhamController = function ($scope, $http, $location, $routeParams, $ro
         }).catch(function (err) {
             if (err.status === 400) {
                 $scope.validationErrors = err.data;
+                Swal.fire('Lỗi!', 'Tên không đúng định dạng', 'error');
+            }else if (err.status === 409) {
+                Swal.fire('Lỗi!', 'Màu sắc đã tồn tại', 'error');
             }
 
         })
@@ -2016,6 +2037,9 @@ window.SanPhamController = function ($scope, $http, $location, $routeParams, $ro
         }).catch(function (err) {
             if (err.status === 400) {
                 $scope.validationErrors = err.data;
+                Swal.fire('Lỗi!', 'Không đúng định dạng', 'error');
+            }else if (err.status === 409) {
+                Swal.fire('Lỗi!', 'Size đã tồn tại', 'error');
             }
 
         })

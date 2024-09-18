@@ -18,22 +18,23 @@ window.DanhMucController = function($scope, $http, $location,$routeParams){
 
     //add category
     $scope.add = function(){
-        $http.post(urlcategory,{
-            name : $scope.form.name,
-            description : $scope.form.description
-        }).then(function(resp){
-            if(resp.status === 200){
+        $http.post(urlcategory, {
+            name: $scope.form.name,
+            description: $scope.form.description
+        }).then(function(resp) {
+            if (resp.status === 200) {
                 Swal.fire('Thêm thành công !', '', 'success')
                 setTimeout(() => {
                     location.href = "#/categorys/view";
                 }, 2000);
             }
-        }).catch(function (err){
-            if (err.status === 400){
+        }).catch(function(err) {
+            if (err.status === 400) {
                 $scope.validationErrors = err.data;
+            } else if (err.status === 409) {
+                Swal.fire('Lỗi!', 'Danh mục đã tồn tại', 'error');
             }
-
-        })
+        });
     }
       //update category
       $scope.update = function(){

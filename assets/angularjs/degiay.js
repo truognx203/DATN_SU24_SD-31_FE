@@ -31,6 +31,8 @@ window.DeGiayController = function($scope, $http, $location,$routeParams){
         }).catch(function (err){
             if (err.status === 400){
                 $scope.validationErrors = err.data;
+            }else if (err.status === 409) {
+                Swal.fire('Lỗi!', 'Đế giày đã tồn tại', 'error');
             }
 
         })
@@ -65,7 +67,7 @@ window.DeGiayController = function($scope, $http, $location,$routeParams){
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                $http.put("http://localhost:8080/api/degiay/delete/"+id).then(function (response){
+                $http.put("http://localhost:8080/api/soletype/delete/"+id).then(function (response){
                     if (response.status === 200){
                         Swal.fire('Xóa thành công !', '', 'success')
                         $scope.loadAll();

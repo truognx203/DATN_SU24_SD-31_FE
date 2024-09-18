@@ -31,6 +31,8 @@ window.ChatLieuController = function($scope, $http, $location,$routeParams){
         }).catch(function (err){
             if (err.status === 400){
                 $scope.validationErrors = err.data;
+            }else if (err.status === 409) {
+                Swal.fire('Lỗi!', 'Chất liệu đã tồn tại', 'error');
             }
 
         })
